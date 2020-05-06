@@ -6,12 +6,35 @@ class ListNode:
 
 
 class Solution:
+    def arrToListNode(self, numbers):
+        # Now convert that list into linked list
+        dummyRoot = ListNode(0)
+        ptr = dummyRoot
+        for number in numbers:
+            ptr.next = ListNode(number)
+            ptr = ptr.next
+
+        ptr = dummyRoot.next
+        return ptr
+
     def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
-        print(l1.next)
-        print(l2.next)
-        return
+        dummy = result = ListNode(0)
+        flag = 0
+        while l1 or l2 or flag:
+            sum = (l1.val if l1 else 0) + (l2.val if l2 else 0) + flag
+            flag, mod = divmod(sum, 10)
+            result.next = ListNode(mod)
+
+            if l1:
+                l1 = l1.next
+            if l2:
+                l2 = l2.next
+            result = result.next
+
+        return dummy.next
 
 
 if __name__ == '__main__':
-    a = Solution()
-    a.addTwoNumbers(2, 3)
+    a = Solution().arrToListNode([1, 2, 3])
+    b = Solution().arrToListNode([4, 5, 6])
+    print(Solution().addTwoNumbers(a, b))
