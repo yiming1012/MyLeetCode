@@ -19,6 +19,7 @@ Follow up: Recursive solution is trivial, could you do it iteratively?
 '''
 # Definition for a binary tree node.
 from typing import List
+from MockTreeNode import Mock
 
 
 class TreeNode:
@@ -55,3 +56,9 @@ class Solution:
             if node.right:
                 stack.append(node.right)
         return res[::-1]
+
+if __name__ == '__main__':
+    arr = [1, 2, 3]
+    # arr To TreeNode
+    root = Mock().arrToTreeNode(arr)
+    print(Solution().postorderTraversal(root))

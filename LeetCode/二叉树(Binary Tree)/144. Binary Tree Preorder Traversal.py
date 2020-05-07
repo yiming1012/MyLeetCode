@@ -19,6 +19,7 @@ Follow up: Recursive solution is trivial, could you do it iteratively?
 '''
 # Definition for a binary tree node.
 from typing import List
+from MockTreeNode import Mock
 
 
 class TreeNode:
@@ -56,5 +57,4 @@ class Solution:
                 stack.append(node.right)
             if node.left:
                 stack.append(node.left)
-
         return res

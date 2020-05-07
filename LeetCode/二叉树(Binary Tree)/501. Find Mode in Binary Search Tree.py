@@ -35,6 +35,7 @@ from MockTreeNode import Mock
 '''
 pycharm消除.py文件中import自己包出现红色波浪线（执行正常）
 解决方法：file——setting——project：xxx——project structure——选中.py模块所在路径点击“source”——ok
+或者右键项目目录 -> Mark Directory As -> source root
 '''
 class TreeNode:
     def __init__(self, x):

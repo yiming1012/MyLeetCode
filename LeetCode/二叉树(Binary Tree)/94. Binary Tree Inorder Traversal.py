@@ -28,7 +28,7 @@ class TreeNode:
 
 
 from typing import List
-
+from MockTreeNode import Mock
 
 class Solution:
     def inorderTraversal(self, root: TreeNode) -> List[int]:
@@ -56,11 +56,6 @@ class Solution:
 
 if __name__ == '__main__':
     arr = [1, 2, 3]
-    root = TreeNode(2)
-    root.left = TreeNode(3)
-    while root:
-        print(root.val)
-        root = root.left
-    print(root)
-    s = Solution()
-    print(s.inorderTraversal(root))
+    # arr To TreeNode
+    root = Mock().arrToTreeNode(arr)
+    print(Solution().inorderTraversal(root))

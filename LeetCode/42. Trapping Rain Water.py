@@ -80,10 +80,9 @@ class Solution:
                 index = stack.pop()
                 if not stack:
                     break
-                minHeight = min(height[i], height[stack[-1]]) - height[index]
-                res += minHeight * (i - stack[-1] - 1)
+                minheight = min(height[i], height[stack[-1]]) - height[index]
+                res += minheight * (i - stack[-1] - 1)
             stack.append(i)
-
         return res
 
     def trap4(self, height: List[int]) -> int:
@@ -168,4 +167,4 @@ class Solution:
 if __name__ == '__main__':
     height = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]
     s = Solution()
-    print(s.trap(height))
+    print(s.trap6(height))
