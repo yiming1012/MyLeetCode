@@ -36,8 +36,7 @@ class Solution:
         return i if i ** 2 == x else i - 1
         # return int(x ** 0.5)
 
-
-    def mySqrt(self, x: int) -> int:
+    def mySqrt2(self, x: int) -> int:
         '''
         执行用时 :44 ms, 在所有 Python3 提交中击败了66.27%的用户
         内存消耗 :13.7 MB, 在所有 Python3 提交中击败了5.20%的用户
@@ -56,7 +55,7 @@ class Solution:
                 return mid
         return right
 
-    def mySqrt(self, x: int) -> int:
+    def mySqrt3(self, x: int) -> int:
         '''
         执行用时 :48 ms, 在所有 Python3 提交中击败了54.34%的用户
         内存消耗 :13.5 MB, 在所有 Python3 提交中击败了5.20%的用户
@@ -71,3 +70,6 @@ class Solution:
         return y
 
 
+if __name__ == '__main__':
+    x = 10
+    print(Solution().mySqrt(x))

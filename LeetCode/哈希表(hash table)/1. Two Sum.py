@@ -1,6 +1,9 @@
 from typing import List
 
-
+"""
+https://zhuanlan.zhihu.com/p/74003719
+本文介绍了dict底层原理
+"""
 class Solution:
     '''
     twoSum1:
