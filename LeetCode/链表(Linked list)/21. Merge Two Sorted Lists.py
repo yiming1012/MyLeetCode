@@ -26,21 +26,31 @@ class Solution:
         node = dummy = ListNode(0)
         while l1 and l2:
             if l1.val < l2.val:
-                dummy.next = l1
-                dummy = dummy.next
+                node.next = l1
                 l1 = l1.next
             else:
-                dummy.next = l2
-                dummy = dummy.next
+                node.next = l2
                 l2 = l2.next
+            node = node.next
 
-        while l1:
-            dummy.next = l1
-            dummy = dummy.next
-            l1 = l1.next
-        while l2:
-            dummy.next = l2
-            dummy = dummy.next
-            l2 = l2.next
+        if l1:
+            node.next = l1
+        if l2:
+            node.next = l2
 
-        return node.next
+        return dummy.next
+
+
+from ArrToLinkedList import ArrToLinkedList
+
+if __name__ == '__main__':
+    l1 = [1, 4, 7]
+    l2 = [2, 4, 5, 6]
+    # 调用函数将数组转换为链表
+    obj=ArrToLinkedList()
+    p = obj.arrToListNode(l1)
+    q = obj.arrToListNode(l2)
+    res = Solution().mergeTwoLists(p, q)
+    while res:
+        print(res.val)
+        res = res.next

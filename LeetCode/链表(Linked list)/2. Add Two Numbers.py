@@ -6,17 +6,6 @@ class ListNode:
 
 
 class Solution:
-    def arrToListNode(self, numbers):
-        # Now convert that list into linked list
-        dummyRoot = ListNode(0)
-        ptr = dummyRoot
-        for number in numbers:
-            ptr.next = ListNode(number)
-            ptr = ptr.next
-
-        ptr = dummyRoot.next
-        return ptr
-
     def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
         dummy = result = ListNode(0)
         flag = 0
