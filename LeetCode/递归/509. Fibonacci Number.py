@@ -76,6 +76,7 @@ class Solution:
         :param N:
         :return:
         '''
+        
         if N <= 1:
             return N
         dp = [0] * (N + 1)
