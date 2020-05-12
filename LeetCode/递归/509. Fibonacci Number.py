@@ -32,12 +32,16 @@ Note:
 链接：https://leetcode-cn.com/problems/fibonacci-number
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 '''
+
+
 class Solution:
     def fib(self, N: int) -> int:
         '''
         执行用时 :1524 ms, 在所有 Python3 提交中击败了5.03%的用户
         内存消耗 :13.7 MB, 在所有 Python3 提交中击败了5.83%的用户
         思路：递归
+        1. 注意递归的出口
+        2. 递归的形式
         :param N:
         :return:
         '''
@@ -45,12 +49,13 @@ class Solution:
             return N
         return self.fib(N - 1) + self.fib(N - 2)
 
-
-    def fib(self, N: int) -> int:
+    def fib2(self, N: int) -> int:
         '''
         执行用时 :44 ms, 在所有 Python3 提交中击败了46.70%的用户
         内存消耗 :13.5 MB, 在所有 Python3 提交中击败了5.83%的用户
         思路：斐波那契数列 F(N) = F(N - 1) + F(N - 2), for N > 1.
+        1. 用两个变量a,b来保存前两位的值
+        2. 迭代
         :param N:
         :return:
         '''
@@ -62,11 +67,12 @@ class Solution:
             N -= 1
         return b
 
-    def fib(self, N: int) -> int:
+    def fib3(self, N: int) -> int:
         '''
         执行用时 :56 ms, 在所有 Python3 提交中击败了33.73%的用户
         内存消耗 :13.7 MB, 在所有 Python3 提交中击败了5.83%的用户
         思路：动态规划法
+        1. 利用一个dp栈来记录前面两位的和
         :param N:
         :return:
         '''
@@ -79,3 +85,7 @@ class Solution:
             dp[i] = dp[i - 1] + dp[i - 2]
         return dp[-1]
 
+
+if __name__ == '__main__':
+    N = 6
+    print(Solution().fib(N))

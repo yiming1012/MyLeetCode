@@ -30,13 +30,26 @@ class Solution:
     def hanota(self, A: List[int], B: List[int], C: List[int]) -> None:
         """
         Do not return anything, modify C in-place instead.
+        1. n = 1 时，直接把盘子从 A 移到 C；
+        2. n > 1 时，
+            (1) 先把上面 n - 1 个盘子从 A 移到 B（子问题，递归）；
+            (2) 再将最大的盘子从 A 移到 C；
+            (3) 再将 B 上 n - 1 个盘子从 B 移到 C（子问题，递归）。
         """
-        if not A:
-            return
 
-        self.hanota()
+        def move(n, A, B, C):
+            if n == 0:
+                return
+            move(n - 1, A, C, B)
+            C.append(A.pop())
+            print(A, B, C)
+            move(n - 1, B, A, C)
+
+        n = len(A)
+        move(n, A, B, C)
+        return C
 
 
 if __name__ == '__main__':
-    A, B, C = [1, 0], [], []
+    A, B, C = [2, 1, 0], [], []
     print(Solution().hanota(A, B, C))
