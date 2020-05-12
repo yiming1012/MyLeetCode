@@ -125,7 +125,6 @@ if __name__ == '__main__':
     obj.push(5)
     obj.getMin()
 
-
     param_3 = obj.top()
     param_4 = obj.getMin()
     print(param_3)
