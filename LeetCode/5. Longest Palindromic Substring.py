@@ -1,4 +1,3 @@
-
 class Solution:
     def longestPalindrome(self, s: str) -> str:
         '''
@@ -110,7 +109,6 @@ class Solution:
             这里很巧妙的将重复的字符当成同一个字符处理,i移动到最后面的一个相同字符
             不仅方便可以确定起始和终止位置，还可以减少遍历，直接从最后一个相同字符下一个开始遍历
             '''
-
             while i < length - 1 and s[i] == s[i + 1]:
                 i += 1
             j = i
@@ -124,8 +122,14 @@ class Solution:
             i += 1
         return s[start:start + maxLength]
 
+
 '''
 1、最先想到的是中心查找，分两种情况：abba和aba。
 2、官方答案很巧妙的将重复的字符当成同一个字符处理,i移动到最后面的一个相同字符
 不仅方便可以确定起始和终止位置，还可以减少遍历，直接从最后一个相同字符下一个开始遍历
 '''
+if __name__ == '__main__':
+    s = "aabbaa"
+    s2 = "abac"
+    print(Solution().longestPalindrome3(s))
+    print(Solution().longestPalindrome3(s2))
