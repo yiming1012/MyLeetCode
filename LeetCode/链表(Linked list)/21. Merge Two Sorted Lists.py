@@ -1,4 +1,4 @@
-'''
+"""
 Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.
 
 Example:
@@ -9,7 +9,9 @@ Output: 1->1->2->3->4->4
 来源：力扣（LeetCode）
 链接：https://leetcode-cn.com/problems/merge-two-sorted-lists
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-'''
+"""
+
+from ArrToLinkedList import ArrToLinkedList
 
 
 # Definition for singly-linked list.
@@ -41,15 +43,13 @@ class Solution:
         return dummy.next
 
 
-from ArrToLinkedList import ArrToLinkedList
-
 if __name__ == '__main__':
-    l1 = [1, 4, 7]
-    l2 = [2, 4, 5, 6]
+    a = [1, 4, 7]
+    b = [2, 4, 5, 6]
     # 调用函数将数组转换为链表
-    obj=ArrToLinkedList()
-    p = obj.arrToListNode(l1)
-    q = obj.arrToListNode(l2)
+    obj = ArrToLinkedList()
+    p = obj.arrToListNode(a)
+    q = obj.arrToListNode(b)
     res = Solution().mergeTwoLists(p, q)
     while res:
         print(res.val)

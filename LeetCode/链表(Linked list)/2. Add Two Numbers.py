@@ -1,4 +1,7 @@
 # Definition for singly-linked list.
+from ArrToLinkedList import ArrToLinkedList
+
+
 class ListNode:
     def __init__(self, x):
         self.val = x
@@ -10,8 +13,8 @@ class Solution:
         dummy = result = ListNode(0)
         flag = 0
         while l1 or l2 or flag:
-            sum = (l1.val if l1 else 0) + (l2.val if l2 else 0) + flag
-            flag, mod = divmod(sum, 10)
+            two_sum = (l1.val if l1 else 0) + (l2.val if l2 else 0) + flag
+            flag, mod = divmod(two_sum, 10)
             result.next = ListNode(mod)
 
             if l1:
@@ -24,6 +27,10 @@ class Solution:
 
 
 if __name__ == '__main__':
-    a = Solution().arrToListNode([1, 2, 3])
-    b = Solution().arrToListNode([4, 5, 6])
-    print(Solution().addTwoNumbers(a, b))
+    # 将数组转换为链表
+    a = ArrToLinkedList().arrToListNode([1, 2, 3])
+    b = ArrToLinkedList().arrToListNode([4, 5, 6])
+    res = Solution().addTwoNumbers(a, b)
+    while res:
+        print(res.val)
+        res = res.next
