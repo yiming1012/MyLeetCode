@@ -63,6 +63,7 @@ def median(A, B):
 
             return (max_of_left + min_of_right) / 2.0
 
+
 """
 1、主要是将两个数组分成四个部分，交叉对比，确定是否需要移位，
 2、如果A[i-1]>B[j],说明中位数在左边，将右边界缩小right=i-1
@@ -72,7 +73,8 @@ def median(A, B):
 6、需要考虑边界问题i==0,j==0,i==len(nums1),j==len(nums2)
 """
 
-def findMedianSortedArrays(self, nums1,nums2):
+
+def findMedianSortedArrays(self, nums1, nums2):
     """
     执行用时 :56 ms, 在所有 Python3 提交中击败了97.15%的用户
     内存消耗 :13.5 MB, 在所有 Python3 提交中击败了36.20%的用户
