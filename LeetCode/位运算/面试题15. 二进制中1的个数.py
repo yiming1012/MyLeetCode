@@ -21,6 +21,8 @@
 链接：https://leetcode-cn.com/problems/er-jin-zhi-zhong-1de-ge-shu-lcof
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 """
+
+
 class Solution:
     def hammingWeight(self, n: int) -> int:
         """
@@ -31,10 +33,10 @@ class Solution:
         时间复杂度：O(logN)
         空间复杂度: O(1)
         """
-        count=0
+        count = 0
         while n:
-            count+=n&1
-            n>>=1
+            count += n & 1
+            n >>= 1
         return count
 
     def hammingWeight2(self, n: int) -> int:
@@ -43,8 +45,8 @@ class Solution:
         内存消耗 :13.7 MB, 在所有 Python3 提交中击败了100.00%的用户
         巧妙之处：利用n&(n-1)可以每次消除一个1，这种方式还可以判断一个数是否为2的n次幂
         """
-        count=0
+        count = 0
         while n:
-            count+=1
-            n&=n-1
+            count += 1
+            n &= n - 1
         return count
