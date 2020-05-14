@@ -48,7 +48,6 @@ class Solution:
         c = collections.Counter(nums)
         return heapq.nlargest(k, c, key=lambda x: c[x])
 
-
     def topKFrequent3(self, nums: List[int], k: int) -> List[int]:
         # return [tp[0] for tp in collections.Counter(nums).most_common(k)]
         dic = collections.Counter(nums)
@@ -62,9 +61,6 @@ class Solution:
             p = heapq.heappop(res)
             arr.append(p[1])
         return arr
-
-
-
 
 
 if __name__ == '__main__':
