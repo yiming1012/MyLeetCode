@@ -17,10 +17,10 @@ return its level order traversal as:
 
 """
 
-
 # Definition for a binary tree node.
 import collections
 from typing import List
+from MockTreeNode import Mock
 
 
 class TreeNode:
@@ -28,6 +28,7 @@ class TreeNode:
         self.val = x
         self.left = None
         self.right = None
+
 
 class Solution:
     def levelOrder(self, root: TreeNode) -> List[List[int]]:
@@ -58,3 +59,55 @@ class Solution:
                     queue.append(root.right)
             res.append(arr)
         return res
+
+    def levelOrder2(self, root: TreeNode) -> List[List[int]]:
+        """
+        执行用时 :44 ms, 在所有 Python3 提交中击败了55.95%的用户
+        内存消耗 :14.5 MB, 在所有 Python3 提交中击败了7.14%的用户
+        思路：dfs
+        """
+
+        def dfs(root, level):
+            if not root:
+                return
+            if len(res) == level:
+                res.append([])
+            res[level].append(root.val)
+            if root.left:
+                dfs(root.left, level + 1)
+            if root.right:
+                dfs(root.right, level + 1)
+
+        res = []
+        print(res)
+        dfs(root, 0)
+        return res
+
+    def levelOrder3(self, root: TreeNode) -> List[List[int]]:
+        """
+        优秀代码
+        """
+        if root is None:
+            return []
+        result = []
+        queue = collections.deque()
+        queue.append(root)
+        step = -1
+        while queue:
+            step += 1
+            result.append([])
+            for _ in range(len(queue)):
+                node = queue.popleft()
+                result[step].append(node.val)
+                for neighbor in (node.left, node.right):
+                    if neighbor is not None:
+                        queue.append(neighbor)
+
+        return result
+
+
+if __name__ == '__main__':
+    arr = [5, 1, 4, None, None, 3, 6]
+    root = Mock().arrToTreeNode(arr)
+    print(Solution().levelOrder3(root))
+    print(root.val)
