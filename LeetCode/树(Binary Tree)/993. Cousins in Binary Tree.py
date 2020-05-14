@@ -48,7 +48,6 @@ class TreeNode:
         self.right = None
 
 
-
 class Solution:
     def isCousins(self, root: TreeNode, x: int, y: int) -> bool:
         """
@@ -82,7 +81,30 @@ class Solution:
                     return False
         return False
 
-    def isCousins2(self, root, x, y):
+    def isCousins2(self, root: TreeNode, x: int, y: int) -> bool:
+        """
+        仿造官方题解
+        1、
+        """
+        depth = {}
+        father = {}
+
+        def dfs(root, layer, pre):
+            if not root:
+                return
+            depth[root.val] = layer
+            father[root.val] = pre.val if pre else 0
+
+            if root.left:
+                dfs(root.left, layer + 1, root)
+
+            if root.right:
+                dfs(root.right, layer + 1, root)
+
+        dfs(root, 0, None)
+        return depth[x] == depth[y] and father[x] != father[y]
+
+    def isCousins3(self, root, x, y):
         """
         官方题解思路：dfs+记忆化
         1. 利用两个dict记录每个节点的父节点和所在的层次
