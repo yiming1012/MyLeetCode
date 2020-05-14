@@ -1,5 +1,6 @@
 '''
-Given an array of integers, find out whether there are two distinct indices i and j in the array such that the absolute difference between nums[i] and nums[j] is at most t and the absolute difference between i and j is at most k.
+Given an array of integers, find out whether there are two distinct indices i and j in the array such that the
+absolute difference between nums[i] and nums[j] is at most t and the absolute difference between i and j is at most k.
 
 Example 1:
 
@@ -87,6 +88,7 @@ class Solution:
                 all_buckets.pop(nums[i - k] // bucket_size)
 
         return False
+
 
 if __name__ == '__main__':
     nums = [1, 0, 1, 1]
