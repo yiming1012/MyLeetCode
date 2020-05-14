@@ -4,6 +4,8 @@ from typing import List
 https://zhuanlan.zhihu.com/p/74003719
 本文介绍了dict底层原理
 """
+
+
 class Solution:
     '''
     twoSum1:
@@ -91,6 +93,7 @@ class Solution:
     Runtime: 40 ms, faster than 97.94% of Python3 online submissions for Two Sum.
     Memory Usage: 14.3 MB, less than 51.16% of Python3 online submissions for Two Sum.
     '''
+
     def twoSum5(self, nums: List[int], target: int) -> List[int]:
         dict = {}
         for i in range(len(nums)):
@@ -98,6 +101,7 @@ class Solution:
                 return [dict[target - nums[i]], i]
             dict[nums[i]] = i
         return False
+
 
 '''
 心得：
