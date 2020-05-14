@@ -18,6 +18,7 @@ Output: 4
 链接：https://leetcode-cn.com/problems/single-number
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 '''
+from functools import reduce
 from typing import List
 
 
@@ -39,3 +40,10 @@ class Solution:
 
     def singleNumber2(self, nums: List[int]) -> int:
         return sum(set(nums)) * 2 - sum(nums)
+
+    def singleNumber3(self, nums: List[int]) -> int:
+        return reduce(lambda x, y: x ^ y, nums)
+
+
+if __name__ == '__main__':
+    print(Solution().singleNumber3([2, 2, 3, 3, 1]))
