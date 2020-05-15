@@ -57,3 +57,18 @@ class Solution:
                     queue.append(root.right)
             else:
                 count += 1
+
+    def minDepth2(self, root: TreeNode) -> int:
+        """
+        思路：递归
+        1、如果节点空，返回深度为0
+        2、如果左子树为空，则遍历右子树
+        3、如果右子树为空，则遍历左子树
+        """
+        if not root:
+            return 0
+        if not root.left:
+            return self.minDepth(root.right) + 1
+        if not root.right:
+            return self.minDepth(root.left) + 1
+        return min(self.minDepth(root.left), self.minDepth(root.right)) + 1
