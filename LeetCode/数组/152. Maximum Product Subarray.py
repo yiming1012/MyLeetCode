@@ -61,20 +61,25 @@ class Solution:
         return max(max(nums), max(reverse))
 
     def maxProduct3(self, nums: List[int]) -> int:
-        if not nums:
-            return
+        """
+        执行用时 :48 ms, 在所有 Python3 提交中击败了83.87%的用户
+        内存消耗 :13.8 MB, 在所有 Python3 提交中击败了12.50%的用户
+        思路：
+        1. 因为是子数组的乘积，存在负负得正的情况，所以每一步都要记录当前的最大值和最小值
+        2. 当遇到负数时，需要交换前面保存的最大值最小值，再和当前负数计算，才能得到正确的最大值和最小值
+        """
         res = nums[0]
-        pre_max = nums[0]
-        pre_min = nums[0]
-        for num in nums[1:]:
-            cur_max = max(pre_max * num, pre_min * num, num)
-            cur_min = min(pre_max * num, pre_min * num, num)
-            res = max(res, cur_max)
-            pre_max = cur_max
-            pre_min = cur_min
+        a, b = 1, 1
+        for num in nums:
+            if num < 0:
+                a, b = b, a
+            a = max(a * num, num)
+            b = min(b * num, num)
+            res = max(a, res)
         return res
 
 
 if __name__ == '__main__':
     arr = [2, 3, -2, 4, 6]
-    print(Solution().maxProduct2(arr))
+    arr1 = [9, 3, -2, 4, 6]
+    print(Solution().maxProduct3(arr1))
