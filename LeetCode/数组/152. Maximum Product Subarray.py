@@ -73,3 +73,8 @@ class Solution:
             pre_max = cur_max
             pre_min = cur_min
         return res
+
+
+if __name__ == '__main__':
+    arr = [2, 3, -2, 4, 6]
+    print(Solution().maxProduct2(arr))
