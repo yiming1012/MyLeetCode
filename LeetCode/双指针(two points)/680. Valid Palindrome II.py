@@ -36,6 +36,20 @@ class Solution:
                 return s[left:right] == s[left:right][::-1] or s[left + 1:right + 1] == s[left + 1:right + 1][::-1]
         return True
 
+    def validPalindrome2(self, s: str) -> bool:
+        """
+        改进：利用lambda
+        """
+        left, right = 0, len(s) - 1
+        isPalindrome = lambda x: x == x[::-1]
+        while left <= right:
+            if s[left] == s[right]:
+                left += 1
+                right -= 1
+            else:
+                return isPalindrome(s[left:right]) or isPalindrome(s[left + 1:right + 1])
+        return True
+
 
 if __name__ == '__main__':
     a = "abcbca"
