@@ -1,4 +1,4 @@
-'''
+"""
 Given a matrix of m x n elements (m rows, n columns), return all elements of the matrix in spiral order.
 
 Example 1:
@@ -23,7 +23,7 @@ Output: [1,2,3,4,8,12,11,10,9,5,6,7]
 来源：力扣（LeetCode）
 链接：https://leetcode-cn.com/problems/spiral-matrix
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-'''
+"""
 from typing import List
 
 
@@ -31,7 +31,7 @@ class Solution:
     def spiralorder(self, matrix: List[List[int]]) -> List[int]:
         """
         思路：
-        1. 利用zip来
+        1. 利用zip实现拉链操作，*为解压
         """
         res = []
         while len(matrix):
@@ -43,7 +43,8 @@ class Solution:
         return res
 
     def spiralorder2(self, matrix: List[List[int]]) -> List[int]:
-        if not matrix: return []
+        if not matrix:
+            return []
         m, n = len(matrix), len(matrix[0])
         x = y = di = 0
         dx = [0, 1, 0, -1]
