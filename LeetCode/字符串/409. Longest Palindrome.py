@@ -1,5 +1,6 @@
 '''
-Given a string which consists of lowercase or uppercase letters, find the length of the longest palindromes that can be built with those letters.
+Given a string which consists of lowercase or uppercase letters, find the length of the longest palindromes
+that can be built with those letters.
 
 This is case sensitive, for example "Aa" is not considered a palindrome here.
 
@@ -78,10 +79,6 @@ class Solution:
         :return:
         '''
         return len(s) - max(0, sum([s.count(i) % 2 for i in set(s)]) - 1)
-
-
-
-
 
 
 if __name__ == '__main__':
