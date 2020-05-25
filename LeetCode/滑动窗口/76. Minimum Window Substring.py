@@ -45,7 +45,6 @@ class Solution:
         1、维护两个指针left和right
         2、right向右遍历到整个字符串包含t,再移动left使得包含的长度最小
         3、利用dict保存遍历过的每个字符的个数
-        时间复杂度：O(n*n)
         """
 
         tt = collections.Counter(t)
@@ -62,34 +61,8 @@ class Solution:
                     start, end = left, right
                 dic[s[left]] -= 1
                 left += 1
-
             right += 1
         return s[start:end + 1] if start != -1 else ""
 
-    def minWindow(self, s: str, t: str) -> str:
-        """
-        执行用时 :100 ms, 在所有 Python3 提交中击败了94.85%的用户
-        内存消耗 :13.8 MB, 在所有 Python3 提交中击败了7.69%的用户
-        效率得到了质的飞跃
-        思路：滑动窗口
-        """
-        mem = collections.defaultdict(int)
-        for char in t:
-            mem[char] += 1
-        t_len = len(t)
-        left = 0
-        minLeft, minRight = 0, len(s)
-        for right, char in enumerate(s):
-            if mem[char] > 0:
-                t_len -= 1
-            mem[char] -= 1
-            if t_len == 0:
-                while mem[s[left]] < 0:
-                    mem[s[left]] += 1
-                    left += 1
-                if right - left < minRight - minLeft:
-                    minLeft, minRight = left, right
-                mem[s[left]] += 1
-                t_len += 1
-                left += 1
-        return "" if minRight == len(s) else s[minLeft:minRight + 1]
+
+
