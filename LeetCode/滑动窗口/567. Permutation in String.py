@@ -38,3 +38,25 @@ class Solution:
 
                 dic2[s2[i - len(s1) + 1]] -= 1
         return False
+
+    def checkInclusion2(self, s1: str, s2: str) -> bool:
+        """
+        不用每次比较dict
+        """
+        if len(s1) > len(s2):
+            return False
+        s1_cnt = [0] * 26
+        s2_cnt = [0] * 26
+        for c in s1:
+            s1_cnt[ord(c) - ord('a')] += 1
+        j = 0
+        for i in range(len(s2)):
+            if i < len(s1) - 1:
+                s2_cnt[ord(s2[i]) - ord('a')] += 1
+                continue
+            s2_cnt[ord(s2[i]) - ord('a')] += 1
+            if s2_cnt == s1_cnt:
+                return True
+            s2_cnt[ord(s2[j]) - ord('a')] -= 1
+            j += 1
+        return False
