@@ -124,7 +124,7 @@ def findMedianSortedArrays(self, nums1, nums2):
             return (leftMax + rightMin) / 2
 
 
-A = []
-B = [1]
+A = [1,3]
+B = [2]
 mid = median(A, B)
 print(mid)
