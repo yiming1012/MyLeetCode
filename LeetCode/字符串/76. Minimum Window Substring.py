@@ -61,11 +61,8 @@ class Solution:
                     start, end = left, right
                 dic[s[left]] -= 1
                 left += 1
-
             right += 1
         return s[start:end + 1] if start != -1 else ""
-
-    
 
 
 
