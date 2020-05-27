@@ -21,6 +21,7 @@ Note:
 链接：https://leetcode-cn.com/problems/subarray-sums-divisible-by-k
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 '''
+import collections
 from typing import List
 
 
@@ -59,9 +60,29 @@ class Solution:
 
         return result
 
+    def subarraysDivByK3(self, A: List[int], K: int) -> int:
+        """
+        思路：前缀和+模运算+哈希表
+        1、求解连续子串所以用到前缀和
+        2、连续子串的和能被K整除，所以需要对presum求mod
+        3、每次的子串可能有多个，需用哈希表保存前面每个presum的个数
+        """
+        dic = collections.defaultdict(lambda: 0)
+        dic[0] = 1
+        presum = 0
+        res = 0
+        for a in A:
+            presum = (presum + a) % K
+            if presum in dic:
+                res += dic[presum]
+            dic[presum] += 1
+        return res
+
 
 if __name__ == '__main__':
     A = [4, 5, 0, -2, -3, 1]
     K = 5
     s = Solution()
     print(s.subarraysDivByK2(A, K))
+    print(s.subarraysDivByK3(A, K))
+    print(s.subarraysDivByK(A, K))
