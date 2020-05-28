@@ -34,6 +34,11 @@ class TreeNode:
 
 class Solution:
     def binaryTreePaths(self, root: TreeNode) -> List[str]:
+        """
+        思路：dfs
+        1、当某个节点的左右子节点都为空时，说明已遍历完该路径上的所有节点
+        2、同时需要对root节点做判断
+        """
         def path(root, s):
             if not root.left and not root.right:
                 res.append(s)
@@ -49,3 +54,5 @@ class Solution:
         res = []
         path(root, str(root.val))
         return res
+
+
