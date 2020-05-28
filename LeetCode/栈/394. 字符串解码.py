@@ -13,9 +13,6 @@ s = "3[a]2[bc]", 返回 "aaabcbc".
 s = "3[a2[c]]", 返回 "accaccacc".
 s = "2[abc]3[cd]ef", 返回 "abcabccdcdcdef".
 
-来源：力扣（LeetCode）
-链接：https://leetcode-cn.com/problems/decode-string
-著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 """
 
 
@@ -38,18 +35,25 @@ class Solution:
         return res
 
     def decodeString2(self, s: str) -> str:
-        res = [[1, ""]]
+        """
+        思路：模拟栈
+        1. 栈每次记录前面排好的字符串和【】前面的数字
+        """
+        arr = []
+        res = ""
+        n = 0
         for c in s:
             if c.isdigit():
-                num = num * 10 + int(c)
+                n = n * 10 + int(c)
             elif c == '[':
-                arr = [num, ""]
+                arr.append((n, res))
+                res, n = "", 0
             elif c == ']':
-                arr[1] *= arr[0]
-                res[-1][1]+=arr[1]
-                num = 0
+                top = arr.pop()
+                res = top[1] + top[0] * res
+
             else:
-                arr[1] = c + arr[1]
+                res += c
         return res
 
 
