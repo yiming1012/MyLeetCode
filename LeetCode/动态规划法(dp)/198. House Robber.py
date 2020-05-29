@@ -61,17 +61,19 @@ class Solution:
         return b
 
     def rob3(self, nums: List[int]) -> int:
-        '''
+        """
         执行用时 :44 ms, 在所有 Python3 提交中击败了37.62%的用户
         内存消耗 :13.6 MB, 在所有 Python3 提交中击败了5.79%的用户
-        思路：前面两个数分别用0表示，就不用判断nums的前两项了
+        思路：因为迭代时，需要用到前面两项的值，所以用a,b表示，而不是数组，使得空间复杂度为O(1)
+        时间复杂度：O(N)
+        空间复杂度：O(1)
         :param nums:
         :return:
-        '''
-        a = 0
-        b = 0
-        for i in range(len(nums)):
-            b, a = max(a + nums[i], b), b
+        """
+
+        a, b = 0, 0
+        for num in nums:
+            a, b = b, max(b, a + num)
         return b
 
 
