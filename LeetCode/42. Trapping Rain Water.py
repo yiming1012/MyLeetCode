@@ -68,7 +68,7 @@ class Solution:
         '''
         执行用时 :60 ms, 在所有 Python3 提交中击败了49.49%的用户
         内存消耗 :14.2 MB, 在所有 Python3 提交中击败了5.04%的用户
-        思路：单调栈
+        思路：单调栈(Monotone Stack)
         :param height:
         :return:
         '''
