@@ -11,7 +11,7 @@
 
 输入: n = 9
 输出: 45
- 
+
 
 限制：
 
@@ -21,6 +21,8 @@
 链接：https://leetcode-cn.com/problems/qiu-12n-lcof
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 """
+
+
 class Solution:
     def sumNums(self, n: int) -> int:
         """
