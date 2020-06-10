@@ -38,7 +38,7 @@ class Solution:
         self.preorderTraversal(root.right)
         return self.res
 
-    def preorderTraversal(self, root: TreeNode) -> List[int]:
+    def preorderTraversal2(self, root: TreeNode) -> List[int]:
         '''
         执行用时 :52 ms, 在所有 Python3 提交中击败了16.32%的用户
         内存消耗 :13.6 MB, 在所有 Python3 提交中击败了7.14%的用户
