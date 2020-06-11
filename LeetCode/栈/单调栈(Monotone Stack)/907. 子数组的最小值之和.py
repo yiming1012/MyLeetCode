@@ -33,6 +33,8 @@ class Solution:
         1. 利用单调栈保存单调递增的数据
         2. 当遇到一个比栈顶元素更小的数时，判断栈顶元素前后的距离left和right，包含栈顶元素且以其为最小值的子序列的个数个left*right
         3. 累加A[left]*left*right
+        时间复杂度：O(N)
+        空间复杂度：O(N)
         """
         res = 0
         A.append(0)
