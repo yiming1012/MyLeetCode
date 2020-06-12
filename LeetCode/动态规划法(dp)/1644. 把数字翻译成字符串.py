@@ -73,6 +73,27 @@ class Solution:
         dfs(dic[num[0]], 0)
         return res
 
+    def translateNum4(self, num: int) -> int:
+        num = str(num)
+        res = []
+
+        def transform(i):
+            return chr(int(i) + ord('a'))
+
+        def dfs(i, word):
+            if i == len(num):
+                res.append(word)
+                return
+            dfs(i + 1, word + transform(num[i]))
+            if i < len(num) - 1 and 9 < int(num[i:i + 2]) < 26:
+                dfs(i + 2, word + transform(num[i:i + 2]))
+            return
+
+        dfs(1, transform(num[0]))
+        if 9 < int(num[:2]) < 26:
+            dfs(2, transform(num[:2]))
+        return res
+
 
 if __name__ == '__main__':
     num = 12258
