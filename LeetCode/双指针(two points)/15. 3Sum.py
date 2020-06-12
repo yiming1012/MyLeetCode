@@ -37,7 +37,6 @@ class Solution:
                             arr.append(subArr)
         return arr
 
-
     def threeSum2(self, nums: List[int]) -> List[List[int]]:
         '''
         执行用时 :860 ms, 在所有 Python3 提交中击败了82.09%的用户
@@ -78,6 +77,44 @@ class Solution:
 
         return arr
 
+    def threeSum3(self, nums: List[int]) -> List[List[int]]:
+        """
+        思路：双指针
+        1. 首先对数组排序
+        2. 固定第一个数，后面两个利用双指针来左右逼近；
+        3. 注意优化：如果左边数+中间数的两倍大于0，退出，因为后面的数更大；如果左边数+右边数的两个小于0，左边数继续往右遍历
+        3. 注意去重是关键；如果两个连续的数相同，下标继续移动
+        时间复杂度：O(N**2) 击败90%
+        """
+        nums.sort()
+        n = len(nums)
+        res = []
+        for i in range(n - 2):
+            if i and nums[i] == nums[i - 1]:
+                continue
+            target = -nums[i]
+            left, right = i + 1, n - 1
+            if nums[left] * 2 > target:
+                break
+            if nums[right] * 2 < target:
+                continue
+            while left < right:
+                if nums[left] + nums[right] < target:
+                    left += 1
+                elif nums[left] + nums[right] > target:
+                    right -= 1
+                else:
+                    res.append([nums[i], nums[left], nums[right]])
+
+                    left += 1
+                    while left < right and nums[left] == nums[left - 1]:
+                        left += 1
+                    right -= 1
+                    while left < right and nums[right] == nums[right + 1]:
+                        right -= 1
+        return res
+
+
 '''
 遇到题目首先考虑边界值：
     1）三个数相加，所以len(nums)>=3
@@ -93,4 +130,6 @@ class Solution:
 if __name__ == '__main__':
     arr = [-1, 0, 1, 2, -1, -4]
     s = Solution()
-    print(s.threeSum(arr))
+    print(s.threeSum1(arr))
+    print(s.threeSum2(arr))
+    print(s.threeSum3(arr))
