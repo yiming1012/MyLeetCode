@@ -28,12 +28,11 @@ class Solution:
         思路：动态规划法
         1. 状态转移方程：dp[i] = min(dp[i - 2] + cost[i - 2], dp[i - 1] + cost[i - 1])
         """
-        cost.append(0)
         n = len(cost)
-        dp = [0] * n
-        for i in range(2, n):
-            dp[i] = min(dp[i - 2] + cost[i - 2], dp[i - 1] + cost[i - 1])
-        return dp[-1]
+        pre, cur = 0, 0
+        for i in range(2, n + 1):
+            pre, cur = cur, min(pre + cost[i - 2], cur + cost[i - 1])
+        return cur
 
     def minCostClimbingStairs2(self, cost: List[int]) -> int:
         """
