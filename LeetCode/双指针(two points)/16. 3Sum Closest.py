@@ -13,56 +13,52 @@ from typing import List
 
 class Solution:
     def threeSumClosest(self, nums: List[int], target: int) -> int:
-        '''
-        执行用时 :148 ms, 在所有 Python3 提交中击败了47.22%的用户
-        内存消耗 :13.7 MB, 在所有 Python3 提交中击败了9.38%的用户
-        :param nums:
-        :param target:
-        :return:
-        '''
+        """
+        思路：双指针
+        1. 主要在于优化
+        2. 首先得排序
+        3. if i>0 and nums[i]==nums[i-1]：continue
+        4. 如果最小的三个数大于target，此时最接近target的数已存在
+        5. 如果最大的三个数小于target，continue
+        """
+        nums.sort()
         n = len(nums)
-        nums.sort()
-        positive = float('inf')
-        negative = -float('inf')
-
+        res = nums[0] + nums[1] + nums[2]
         for i in range(n - 2):
-            left, right = i + 1, n - 1
-            while left < right:
-                three_sum = nums[i] + nums[left] + nums[right]
-                if three_sum > target:
-                    positive = min(positive, three_sum - target)
-                    right -= 1
-                elif three_sum < target:
-                    negative = max(negative, three_sum - target)
-                    left += 1
-                else:
-                    return target
-        # print(positive,negative)
-        return target + positive if positive + negative < 0 else target + negative
+            l, r = i + 1, n - 1
+            if i > 0 and nums[i] == nums[i - 1]:
+                continue
+            threeSum = nums[i] + nums[i + 1] + nums[i + 2]
+            if threeSum >= target:
+                if abs(threeSum - target) < abs(res - target):
+                    res = threeSum
+                    return res
+            if nums[i] + nums[-1] + nums[-2] < target:
+                res = nums[i] + nums[-1] + nums[-2]
+                continue
 
-
-class Solution:
-    def threeSumClosest(self, nums: List[int], target: int) -> int:
-        '''
-        执行用时 :132 ms, 在所有 Python3 提交中击败了59.59%的用户
-        内存消耗 :13.7 MB, 在所有 Python3 提交中击败了9.38%的用户
-        :param nums:
-        :param target:
-        :return:
-        '''
-        n=len(nums)
-        nums.sort()
-        res =sum(nums[:3])
-        for i in range(n-2):
-            left,right=i+1,n-1
-            while left<right:
-                three_sum=nums[i]+nums[left]+nums[right]
-                if abs(three_sum-target)<abs(res-target):
-                    res=three_sum
-                if three_sum>target:
-                    right-=1
-                elif three_sum<target:
-                    left+=1
+            while l < r:
+                threeSum = nums[i] + nums[l] + nums[r]
+                if threeSum < target:
+                    if abs(threeSum - target) < abs(res - target):
+                        res = threeSum
+                    l += 1
+                    # 连续的数相等，则跳过
+                    while l < r and nums[l] == nums[l - 1]:
+                        l += 1
+                elif threeSum > target:
+                    if abs(threeSum - target) < abs(res - target):
+                        res = threeSum
+                    r -= 1
+                    # 连续的数相等，则跳过
+                    while l < r and nums[r] == nums[r + 1]:
+                        r -= 1
                 else:
                     return target
         return res
+
+
+if __name__ == '__main__':
+    nums = [-1, 2, 1, -4]
+    target = 1
+    print(Solution().threeSumClosest(nums, target))
