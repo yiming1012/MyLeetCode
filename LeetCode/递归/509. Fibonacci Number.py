@@ -35,7 +35,7 @@ Note:
 
 
 class Solution:
-    def fib(self, N: int) -> int:
+    def fib1(self, N: int) -> int:
         '''
         执行用时 :1524 ms, 在所有 Python3 提交中击败了5.03%的用户
         内存消耗 :13.7 MB, 在所有 Python3 提交中击败了5.83%的用户
@@ -47,7 +47,7 @@ class Solution:
         '''
         if N <= 1:
             return N
-        return self.fib(N - 1) + self.fib(N - 2)
+        return self.fib1(N - 1) + self.fib1(N - 2)
 
     def fib2(self, N: int) -> int:
         '''
@@ -76,7 +76,7 @@ class Solution:
         :param N:
         :return:
         '''
-        
+
         if N <= 1:
             return N
         dp = [0] * (N + 1)
@@ -86,7 +86,22 @@ class Solution:
             dp[i] = dp[i - 1] + dp[i - 2]
         return dp[-1]
 
+    def fib4(self, N: int) -> int:
+        """
+        思路：记忆化递归
+        """
+        if N in cache:
+            return cache[N]
+        if N <= 1:
+            return N
+        cache[N] = self.fib4(N - 1) + self.fib4(N - 2)
+        return cache[N]
+
 
 if __name__ == '__main__':
     N = 6
-    print(Solution().fib(N))
+    cache = {}
+    print(Solution().fib1(N))
+    print(Solution().fib2(N))
+    print(Solution().fib3(N))
+    print(Solution().fib4(N))
