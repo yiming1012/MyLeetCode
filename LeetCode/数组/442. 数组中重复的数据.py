@@ -23,6 +23,9 @@ from typing import List
 
 class Solution:
     def findDuplicates1(self, nums: List[int]) -> List[int]:
+        """
+        思路：涉及到重复的判断，且不让使用额外的空间时，可以通过修改下标对应的数来原地赋值
+        """
         res = []
         for i, num in enumerate(nums):
             if nums[abs(num) - 1] > 0:

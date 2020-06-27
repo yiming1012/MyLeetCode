@@ -23,7 +23,7 @@ from typing import List
 class Solution:
     def findDisappearedNumbers1(self, nums: List[int]) -> List[int]:
         """
-        思路：
+        思路：原地赋值
         1. 第一遍for循环，把下标和数值一一对应
         2. 第二遍for循环，判断下标和数值不对应的
         """
