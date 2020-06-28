@@ -46,7 +46,6 @@ class Solution:
                 right = mid - 1
             else:
                 return True
-
         return False
 
     def isPerfectSquare3(self, num: int) -> bool:
