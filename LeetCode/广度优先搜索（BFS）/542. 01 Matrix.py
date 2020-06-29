@@ -1,4 +1,4 @@
-'''
+"""
 Given a matrix consists of 0 and 1, find the distance of the nearest 0 for each cell.
 
 The distance between two adjacent cells is 1.
@@ -38,7 +38,7 @@ The cells are adjacent in only four directions: up, down, left and right.
 来源：力扣（LeetCode）
 链接：https://leetcode-cn.com/problems/01-matrix
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
-'''
+"""
 import collections
 from typing import List
 
@@ -65,6 +65,29 @@ class Solution:
 
     def updateMatrix2(self, matrix: List[List[int]]) -> List[List[int]]:
         m, n = len(matrix), len(matrix[0])
+        pos = [(1, 0), (0, 1), (-1, 0), (0, -1)]
+        dp = [[0] * n for _ in range(m)]
+        zero = set()
+        for i in range(m):
+            for j in range(n):
+                if matrix[i][j] == 0:
+                    zero.add((i, j))
+        # 将所有0添加到队列中，遍历队列附近的
+        queue = collections.deque(zero)
+        # 多源BFS
+        while queue:
+            i, j = queue.popleft()
+            for p in pos:
+                a, b = p
+                ia, jb = i + a, j + b
+                if 0 <= ia < m and 0 <= jb < n and (ia, jb) not in zero:
+                    queue.append((ia, jb))
+                    dp[ia][jb] = dp[i][j] + 1
+                    zero.add((ia, jb))
+        return dp
+
+    def updateMatrix3(self, matrix: List[List[int]]) -> List[List[int]]:
+        m, n = len(matrix), len(matrix[0])
         # 初始化动态规划的数组，所有的距离值都设置为一个很大的数
         dist = [[10 ** 9] * n for _ in range(m)]
         # 如果 (i, j) 的元素为 0，那么距离为 0
@@ -90,6 +113,8 @@ class Solution:
 
 
 if __name__ == '__main__':
-    matrix = [[0, 0, 0], [0, 1, 0], [0, 0, 0]]
+    matrix = [[0, 0, 0], [0, 1, 0], [1, 1, 1]]
     s = Solution()
-    print(s.updateMatrix(matrix))
+    print(s.updateMatrix1(matrix))
+    print(s.updateMatrix2(matrix))
+    print(s.updateMatrix3(matrix))

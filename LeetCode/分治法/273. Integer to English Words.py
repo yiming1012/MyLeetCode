@@ -119,8 +119,6 @@ class Solution:
 4、巧妙之处在于：不把零放到list中，否则末尾会出现zero
 '''
 
-
-
 if __name__ == '__main__':
     num = 20
     s = Solution()

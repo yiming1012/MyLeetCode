@@ -50,7 +50,6 @@ class Solution:
         :return:
         '''
         """
-        
         Do not return anything, modify board in-place instead.
         """
         if len(board) == 0:

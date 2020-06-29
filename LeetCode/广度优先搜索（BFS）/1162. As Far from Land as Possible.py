@@ -34,11 +34,12 @@ grid[i][j] is 0 or 1
 链接：https://leetcode-cn.com/problems/as-far-from-land-as-possible
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 '''
+import collections
 from typing import List
 
 
 class Solution:
-    def maxDistance(self, grid: List[List[int]]) -> int:
+    def maxDistance1(self, grid: List[List[int]]) -> int:
         n = len(grid)
         steps = -1
         queue = [(i, j) for i in range(n) for j in range(n) if grid[i][j] == 1]
@@ -54,5 +55,35 @@ class Solution:
 
         return steps
 
+    def maxDistance2(self, grid: List[List[int]]) -> int:
+        """
+        思路：多源BFS
+        1. 先将满足条件的坐标添加到队列当中，再由近到远遍历，统计计算距离
+        """
+        pos = [(1, 0), (0, 1), (-1, 0), (0, -1)]
+        m, n = len(grid), len(grid[0])
+        dp = [[0] * n for _ in range(m)]
+        visited = set()
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == 1:
+                    visited.add((i, j))
+        queue = collections.deque(visited)
+        res = float('-inf')
+        while queue:
+            x, y = queue.popleft()
+            for p in pos:
+                a, b = p
+                xa, yb = x + a, y + b
+                if 0 <= xa < m and 0 <= yb < n and (xa, yb) not in visited:
+                    queue.append((xa, yb))
+                    visited.add((xa, yb))
+                    dp[xa][yb] = dp[x][y] + 1
+                    res = max(res, dp[xa][yb])
+        return res if res != float('-inf') else -1
 
 
+if __name__ == '__main__':
+    grid = [[1, 0, 0], [0, 0, 0], [0, 0, 0]]
+    print(Solution().maxDistance1(grid))
+    print(Solution().maxDistance2(grid))
