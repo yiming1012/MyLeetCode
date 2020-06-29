@@ -39,7 +39,7 @@ How would you handle overflow for very large input integers?
 ## 思路：
 只要固定前面两个数，后面的数都是确定的。所以我们用两个循环找前面两个数，看是否可以引出后面的数。
 
-思路一：递归
+思路一：dfs
 
 思路二：迭代
 '''
@@ -73,7 +73,6 @@ class Solution:
 
     # 思路二：迭代
     def isAdditiveNumber2(self, num: str) -> bool:
-
         def isValid(sub1, sub2, num):
             while num:
                 sub1, sub2, = sub2, str(int(sub1) + int(sub2))
@@ -117,13 +116,12 @@ class Solution:
         return False
 
     def isAdditiveNumber4(self, num: str) -> bool:
-        '''
+        """
         执行用时 :56 ms, 在所有 Python3 提交中击败了12.97%的用户
         内存消耗 :13.8 MB, 在所有 Python3 提交中击败了7.14%的用户
         :param num:
         :return:
-        '''
-
+        """
         def isValid(num1, num2, remain):
             if num1[0] == '0' and len(num1) > 1: return False
             if num2[0] == '0' and len(num2) > 1: return False
@@ -150,4 +148,7 @@ class Solution:
 if __name__ == '__main__':
     num = "123456579"
     s = Solution()
+    print(s.isAdditiveNumber1(num))
+    print(s.isAdditiveNumber2(num))
+    print(s.isAdditiveNumber3(num))
     print(s.isAdditiveNumber4(num))
