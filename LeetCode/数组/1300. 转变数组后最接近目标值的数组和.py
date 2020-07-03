@@ -53,3 +53,7 @@ class Solution:
         return res
 
 
+if __name__ == '__main__':
+    arr = [4, 9, 3]
+    target = 10
+    print(Solution().findBestValue(arr, target))
