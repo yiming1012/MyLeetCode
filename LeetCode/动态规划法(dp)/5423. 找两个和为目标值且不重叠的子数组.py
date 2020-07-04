@@ -65,12 +65,17 @@ class Solution:
         sum_record = {0: -1}
         for i, num in enumerate(arr):
             sums += num
-            dp[i] = dp[i-1]
+            dp[i] = dp[i - 1]
             if sums - target in sum_record:
-                cur_len = i - sum_record[sums-target]
+                cur_len = i - sum_record[sums - target]
                 if i - cur_len >= 0:
-                    ans = min(ans, cur_len + dp[i-cur_len])
-                dp[i] = min(dp[i-1], cur_len)
+                    ans = min(ans, cur_len + dp[i - cur_len])
+                dp[i] = min(dp[i - 1], cur_len)
             sum_record[sums] = i
         return ans if ans != float("inf") else -1
 
+
+if __name__ == '__main__':
+    arr = [3, 1, 1, 1, 5, 1, 2, 1]
+    target = 3
+    print(Solution().minSumOfLengths(arr, target))
