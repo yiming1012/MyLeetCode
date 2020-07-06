@@ -35,7 +35,6 @@ from typing import List
 
 class Solution:
     def numPairsDivisibleBy60(self, time: List[int]) -> int:
-        A
         count = 0
         dic = collections.defaultdict(lambda: 0)
         for t in time:
