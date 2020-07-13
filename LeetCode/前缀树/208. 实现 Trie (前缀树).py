@@ -20,6 +20,7 @@ trie.search("app");     // 返回 true
 链接：https://leetcode-cn.com/problems/implement-trie-prefix-tree
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 """
+import collections
 
 
 class Trie:
@@ -36,13 +37,11 @@ class Trie:
         """
         root = self.dic
         for i in word:
-            if i in root:
-                root = root[i]
-            else:
+            if i not in root:
                 root[i] = {}
-                root = root[i]
+            root = root[i]
         root["#"] = "#"
-        print(root)
+        print(self.dic)
 
     def search(self, word: str) -> bool:
         """
@@ -71,8 +70,13 @@ class Trie:
                 return False
         return True
 
+
 # Your Trie object will be instantiated and called as such:
-# obj = Trie()
-# obj.insert(word)
-# param_2 = obj.search(word)
-# param_3 = obj.startsWith(prefix)
+word = "abc"
+prefix = "ab"
+obj = Trie()
+obj.insert(word)
+param_2 = obj.search(word)
+param_3 = obj.startsWith(prefix)
+print(param_2)
+print(param_3)
