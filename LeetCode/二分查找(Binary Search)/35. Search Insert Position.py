@@ -29,6 +29,10 @@ from typing import List
 
 class Solution:
     def searchInsert(self, nums: List[int], target: int) -> int:
+        """
+        思路：二分模板
+        1. 搜索位置可能在数组头或尾，所以low, high = 0, n
+        """
         n = len(nums)
         low, high = 0, n
         while low < high:
