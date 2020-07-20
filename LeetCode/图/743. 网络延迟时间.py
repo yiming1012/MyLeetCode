@@ -105,7 +105,7 @@ class Solution:
         ans = max(dist.values())
         return ans if ans < float('inf') else -1
 
-    def networkDelayTime5(self, times: List[List[int]], N: int, K: int) -> int:
+    def networkDelayTime4(self, times: List[List[int]], N: int, K: int) -> int:
         """
         思路：迪杰斯特拉算法+堆优化
         1. 将节点v和当前K离v最近的距离d加入到小根堆里面heapq.heappush(pq,(d,v))，这样每次堆顶元素都是最小值
@@ -131,14 +131,23 @@ class Solution:
         res = max(dist.values())
         return -1 if res == float('inf') else res
 
-    def networkDelayTime6(self, times: List[List[int]], N: int, K: int) -> int:
+    def networkDelayTime5(self, times: List[List[int]], N: int, K: int) -> int:
         """
         思路：Floyd(多源最短路径)
         1. 解决任意两点间的最短距离
         2. 时间复杂度: N**3
         """
-
-
+        graph = [[float('inf')] * (N + 1) for _ in range(N + 1)]
+        for u, v, w in times:
+            graph[u][v] = w
+        for i in range(1, N + 1):
+            graph[i][i] = 0
+        for k in range(1, N + 1):
+            for i in range(1, N + 1):
+                for j in range(1, N + 1):
+                    graph[i][j] = min(graph[i][j], graph[i][k] + graph[k][j])
+        res = max(graph[K][1:])
+        return -1 if res == float('inf') else res
 
 
 if __name__ == '__main__':
@@ -150,4 +159,3 @@ if __name__ == '__main__':
     print(Solution().networkDelayTime3(times, N, K))
     print(Solution().networkDelayTime4(times, N, K))
     print(Solution().networkDelayTime5(times, N, K))
-    print(Solution().networkDelayTime6(times, N, K))
