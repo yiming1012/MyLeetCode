@@ -137,8 +137,16 @@ class Solution:
         1. 解决任意两点间的最短距离
         2. 时间复杂度: N**3
         """
-
-
+        graph = [[float('inf')] * (N + 1) for _ in range(N + 1)]
+        for u, v, w in times:
+            graph[u][v] = w
+        graph[K][K] = 0
+        for k in range(1, N + 1):
+            for i in range(1, N + 1):
+                for j in range(1, N + 1):
+                    graph[i][j] = min(graph[i][j], graph[i][k] + graph[k][j])
+        res = max(graph[K][1:])
+        return -1 if res == float('inf') else res
 
 
 if __name__ == '__main__':
