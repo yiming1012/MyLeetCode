@@ -158,4 +158,3 @@ if __name__ == '__main__':
     print(Solution().networkDelayTime3(times, N, K))
     print(Solution().networkDelayTime5(times, N, K))
     print(Solution().networkDelayTime6(times, N, K))
-
