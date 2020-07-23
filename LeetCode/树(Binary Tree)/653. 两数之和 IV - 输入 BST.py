@@ -32,6 +32,8 @@ Target = 28
 链接：https://leetcode-cn.com/problems/two-sum-iv-input-is-a-bst
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 """
+
+
 # Definition for a binary tree node.
 class TreeNode:
     def __init__(self, x):
@@ -39,8 +41,43 @@ class TreeNode:
         self.left = None
         self.right = None
 
+
 class Solution:
-    def findTarget(self, root: TreeNode, k: int) -> bool:
+    def findTarget1(self, root: TreeNode, k: int) -> bool:
+        """
+        思路：回溯+剪枝
+        """
+        def recur(root, k, hashset):
+            if not root:
+                return False
+            target = k - root.val
+            if target in hashset:
+                return True
+            else:
+                hashset.add(root.val)
+            return recur(root.left, k, hashset) or recur(root.right, k, hashset)
+
+        hashset = set()
+        return recur(root, k, hashset)
+
+    def findTarget2(self, root: TreeNode, k: int) -> bool:
+        """
+        思路：通过flag来标记是否已找到
+        """
         if not root:
-            return False
-        
+            return []
+        dic = set()
+        flag = False
+
+        def inorder(root):
+            if root:
+                inorder(root.left)
+                if k - root.val in dic:
+                    nonlocal flag
+                    flag = True
+                    return
+                dic.add(root.val)
+                inorder(root.right)
+
+        inorder(root)
+        return flag

@@ -28,11 +28,12 @@ from typing import List
 
 
 class Solution:
-    def findMin(self, nums: List[int]) -> int:
+    def findMin1(self, nums: List[int]) -> int:
         '''
         执行用时 :32 ms, 在所有 Python3 提交中击败了96.03%的用户
         内存消耗 :13.9 MB, 在所有 Python3 提交中击败了5.36%的用户
         思路：遍历寻找转折点，时间复杂度：O(n)
+        如果某个点比前面的数值小，说明这个点是最小值
         :param nums:
         :return:
         '''
@@ -47,6 +48,10 @@ class Solution:
         执行用时 :52 ms, 在所有 Python3 提交中击败了48.07%的用户
         内存消耗 :13.8 MB, 在所有 Python3 提交中击败了5.36%的用户
         思路：如果首项和尾项相同，则尾项-1向前移动一位
+        1. mid和right对应的值可能相同，此时可能有两种情况
+            3 3 3 3 3 1 3
+            3 1 3 3 3 3 3
+        所以不能辨别该怎么移动指针，所以就移动最后一位right-=1
         :param nums:
         :return:
         '''
@@ -86,3 +91,9 @@ class Solution:
         # the 'low' and 'high' index converge to the inflection point.
         return nums[low]
 
+
+if __name__ == '__main__':
+    nums = [3, 4, 5, 1, 2]
+    print(Solution().findMin1(nums))
+    print(Solution().findMin2(nums))
+    print(Solution().findMin3(nums))
