@@ -56,35 +56,6 @@ from typing import List
 
 
 class Solution:
-    ans = "0"
-
-    def largestNumber(self, cost: List[int], target: int) -> str:
-        dic = collections.defaultdict()
-        for i, c in enumerate(cost):
-            dic[c] = i + 1
-        dic = sorted(dic.items(), key=lambda item: item[0])
-        ans = []
-        st = set()
-
-        def dfs(s, remain):
-            if remain == 0 and s not in st:
-                tmp = "".join(sorted(s, reverse=True))
-                if len(tmp) > len(self.ans):
-                    self.ans = tmp
-                elif len(tmp) == len(self.ans) and tmp > self.ans:
-                    self.ans = tmp
-                return
-
-            for k, v in dic:
-                if remain - k >= 0:
-                    dfs(s + [str(v)], remain - k)
-
-        dfs([], target)
-
-        return self.ans
-
-
-class Solution:
     def largestNumber(self, cost: List[int], target: int) -> str:
         dp = {}
 
@@ -95,7 +66,6 @@ class Solution:
                 return -1
             if t in dp:
                 return dp[t]
-
             ans = -1
             for i, v in enumerate(cost):
                 tmp = dfs(t - v)
@@ -107,3 +77,7 @@ class Solution:
         return str(max(0, dfs(target)))
 
 
+if __name__ == '__main__':
+    cost = [4, 3, 2, 5, 6, 7, 2, 5, 5]
+    target = 9
+    print(Solution().largestNumber(cost, target))
