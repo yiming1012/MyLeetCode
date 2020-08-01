@@ -56,7 +56,7 @@ from typing import List
 
 
 class Solution:
-    def largestNumber(self, cost: List[int], target: int) -> str:
+    def largestNumber1(self, cost: List[int], target: int) -> str:
         dp = {}
 
         def dfs(t):
@@ -76,8 +76,11 @@ class Solution:
 
         return str(max(0, dfs(target)))
 
+    def largestNumber2(self, cost: List[int], target: int) -> str:
+        print(cost, target)
+
 
 if __name__ == '__main__':
     cost = [4, 3, 2, 5, 6, 7, 2, 5, 5]
     target = 9
-    print(Solution().largestNumber(cost, target))
+    print(Solution().largestNumber1(cost, target))

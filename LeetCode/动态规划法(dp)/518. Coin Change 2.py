@@ -36,11 +36,12 @@ the answer is guaranteed to fit into signed 32-bit integer
 链接：https://leetcode-cn.com/problems/coin-change-2
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 '''
+from functools import lru_cache
 from typing import List
 
 
 class Solution:
-    def change(self, amount: int, coins: List[int]) -> int:
+    def change1(self, amount: int, coins: List[int]) -> int:
         '''
         执行用时 :220 ms, 在所有 Python3 提交中击败了53.19%的用户
         内存消耗 :13.5 MB, 在所有 Python3 提交中击败了57.14%的用户
@@ -55,9 +56,21 @@ class Solution:
             print(dp)
         return dp[-1]
 
+    def change2(self, amount: int, coins: List[int]) -> int:
+        @lru_cache(None)
+        def dfs(r, i):
+            if r == 0:
+                return 1
+            if r < 0 or i == len(coins):
+                return 0
+            return dfs(r - coins[i], i) + dfs(r, i + 1)
+
+        return dfs(amount, 0)
+
 
 if __name__ == '__main__':
     amount = 5
-    coins = [2]
+    coins = [1, 2, 5]
     s = Solution()
-    print(s.change(amount, coins))
+    print(s.change1(amount, coins))
+    print(s.change2(amount, coins))
