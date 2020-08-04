@@ -31,12 +31,28 @@
 
 
 # Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
 class Solution:
+    nex = None
+
+    def flatten(self, root: TreeNode) -> None:
+        """
+        思路：
+        1. 记录中间变量
+        """
+        if root:
+            self.flatten(root.right)
+            self.flatten(root.left)
+            print(root.val)
+            root.right = self.nex
+            root.left = None
+            self.nex = root
 
     def flatten(self, root: TreeNode) -> None:
         """
@@ -58,3 +74,4 @@ class Solution:
             arr[i].left = None
             arr[i].right = arr[i + 1]
         return dummy
+

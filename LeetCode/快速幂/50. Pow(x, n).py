@@ -27,7 +27,7 @@ from math import inf
 
 
 class Solution:
-    def myPow(self, x: float, n: int) -> float:
+    def myPow1(self, x: float, n: int) -> float:
         """
         思路：迭代
         时间复杂度：O(N)
@@ -91,7 +91,5 @@ class Solution:
 
 if __name__ == '__main__':
     x, n = 2, 10
-    print(Solution().myPow(x, n))
-    print(Solution().myPow(0, 0))
-    print(Solution().myPow(0, -1))
-    print(Solution().myPow(3, -1))
+    print(Solution().myPow1(x, n))
+    print(Solution().myPow2(x, n))
