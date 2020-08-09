@@ -71,10 +71,15 @@ class Solution:
         return dp(0, len(cuts) - 1)
 
     def minCost2(self, n: int, cuts: List[int]) -> int:
+        """
+        思路：记忆化递归
+        @param n:
+        @param cuts:
+        @return:
+        """
         cuts = [0] + sorted(cuts) + [n]
         dic = collections.defaultdict()
 
-        # @lru_cache(None)
         def dp(l, r):
             if l >= r - 1:
                 return 0
