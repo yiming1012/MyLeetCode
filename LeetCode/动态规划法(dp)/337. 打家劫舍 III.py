@@ -45,19 +45,19 @@ class TreeNode:
 class Solution:
     def rob(self, root: TreeNode) -> int:
         """
+        思路：树形dp模板，背诵并默写全文
+        1. 每个点有两种情况：[选,不选]
+        2. 选：root.val + left[1] + right[1]
+        3. 不选：max(left) + max(right),获取左右节点的最大值之和
         @param root:
         @return:
         """
 
-        if not root:
-            return 0
-        res = []
-
         def dfs(root):
-            if root:
-                dfs(root.left)
-                dfs(root.right)
-                res.append(root.val)
+            if not root:
+                return [0, 0]
+            left = dfs(root.left)
+            right = dfs(root.right)
+            return [root.val + left[1] + right[1], max(left) + max(right)]
 
-        dfs(root)
-        print(res)
+        return max(dfs(root))
