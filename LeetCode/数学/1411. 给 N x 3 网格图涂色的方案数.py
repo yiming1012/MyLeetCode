@@ -51,7 +51,6 @@ class Solution:
         2. 上一行有两种：ABC和ABA
         3. i-1行为ABC时，i行可以为ABC和ABA，分别有2种和2种
         4. i-1行为ABA时，i行可以为ABC和ABA，分别为2种和3种
-
         @param n:
         @return:
         """
