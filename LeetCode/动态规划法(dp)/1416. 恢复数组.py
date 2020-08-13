@@ -41,3 +41,37 @@
 s 只包含数字且不包含前导 0 。
 1 <= k <= 10^9.
 """
+
+
+class Solution:
+    def numberOfArrays(self, s: str, k: int) -> int:
+        """
+        思路：动态规划法
+        1. https://leetcode-cn.com/problems/restore-the-array/solution/dong-tai-gui-hua-zhu-zi-fu-jie-xi-pan-duan-you-duo/
+        2. 优化点：当数据已经大于K并且后面全为0，退出，返回0
+        @param s:
+        @param k:
+        @return:
+        """
+        mod = 10 ** 9 + 7
+        n = len(s)
+        dp = [0] * (n + 1)
+        dp[0] = 1
+        for i in range(1, n + 1):
+            for j in range(i - 1, -1, -1):
+                if s[j] == "0":
+                    continue
+                if int(s[j:i]) <= k:
+                    dp[i] += dp[j]
+                else:
+                    if s[i - 1] == "0" and dp[i] == 0:
+                        return 0
+                    break
+
+        return dp[-1] % mod
+
+
+if __name__ == '__main__':
+    s = "1317"
+    k = 2000
+    print(Solution().numberOfArrays(s, k))
