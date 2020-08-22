@@ -67,8 +67,8 @@ class Solution:
         """
         if not root:
             return 0
-        if not root.left:
-            return self.minDepth(root.right) + 1
-        if not root.right:
-            return self.minDepth(root.left) + 1
-        return min(self.minDepth(root.left), self.minDepth(root.right)) + 1
+        left = self.minDepth(root.left)
+        right = self.minDepth(root.right)
+        return min(left, right) + 1 if left and right else (left if left else right) + 1
+        # return min(left, right) + 1 if left and right else left + right + 1
+
