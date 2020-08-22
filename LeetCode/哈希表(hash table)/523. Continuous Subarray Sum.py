@@ -31,60 +31,22 @@ from typing import List
 class Solution:
     def checkSubarraySum(self, nums: List[int], k: int) -> bool:
         """
-        执行用时 :1040 ms, 在所有 Python3 提交中击败了37.26%的用户
-        内存消耗 :13.7 MB, 在所有 Python3 提交中击败了6.00%的用户
-        思路：
-        1、利用到前缀和
-        2、查找数组中[j,i] ,(j<i-1)是否满足条件
-        3、注意k=0的情况
-        :param nums:
-        :param k:
-        :return:
-        """
-        nums.insert(0, 0)
-        for i in range(2, len(nums)):
-            nums[i] += nums[i - 1]
-            for j in range(i - 1):
-                if (k == 0 and nums[i] == nums[j]) or (k != 0 and (nums[i] - nums[j]) % k == 0):
-                    return True
-        return False
-
-    def checkSubarraySum2(self, nums: List[int], k: int) -> bool:
-        """
-        执行用时 :316 ms, 在所有 Python3 提交中击败了63.94%的用户
-        内存消耗 :13.9 MB, 在所有 Python3 提交中击败了6.00%的用户
-        思路：对k取余数，如果前i-2个树中存在本次的值，则True
-        :param nums:
-        :param k:
-        :return:
-        """
-        nums.insert(0, 0)
-        for i in range(1, len(nums)):
-            nums[i] += nums[i - 1]
-            nums[i] = nums[i] % k if k != 0 else nums[i]
-            if nums[i] in nums[:i - 1]:
-                return True
-        return False
-
-
-    def checkSubarraySum3(self, nums: List[int], k: int) -> bool:
-        """
         官方解题:前缀和+哈希
+        1. 如果子数组和是k的倍数，那么他的余数也肯定在哈希表中
         :param nums:
         :param k:
         :return:
         """
-        sumdict = {}
-        sumN = 0
-        sumdict[0] = -1
-        for i in range(len(nums)):
-            sumN += nums[i]
-            if k != 0: sumN = sumN % k
-            if sumN in sumdict:
-                if i - sumdict[sumN] > 1:
+        dic = {0: -1}
+        pre = 0
+        for i, num in enumerate(nums):
+            pre += num
+            if k != 0: pre %= k
+            if pre in dic:
+                if i - dic[pre] > 1:
                     return True
             else:
-                sumdict[sumN] = i
+                dic[pre] = i
         return False
 
 
