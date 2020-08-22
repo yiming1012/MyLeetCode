@@ -28,14 +28,52 @@ The input string length won't exceed 1000.
 
 
 class Solution:
-    def countSubstrings(self, s: str) -> int:
-        N = len(s)
-        ans = 0
-        for center in range(2 * N - 1):
-            left = center // 2
-            right = left + center % 2
-            while left >= 0 and right < N and s[left] == s[right]:
-                ans += 1
+    def countSubstrings1(self, s: str) -> int:
+        """
+        思路：分别计算奇偶性
+        @param s:
+        @return:
+        """
+        n = len(s)
+        res = 0
+        for i in range(n):
+            left, right = i, i
+            # 奇数
+            while left >= 0 and right < n and s[left] == s[right]:
+                res += 1
                 left -= 1
                 right += 1
-        return ans
+            # 偶数
+            left, right = i, i + 1
+            while left >= 0 and right < n and s[left] == s[right]:
+                res += 1
+                left -= 1
+                right += 1
+        return res
+
+    def countSubstrings2(self, s: str) -> int:
+        """
+        思路；将奇偶性合并在一起考虑，巧妙
+        1. 将总长度扩大到2*N-1
+        2. left = center//2 ，其中center的奇偶性对left没有影响
+        3. right = left + center%2 ，当center为奇数时，right=left+1;当center为偶数时，right=left
+        @param s:
+        @return:
+        """
+        n = len(s)
+        res = 0
+        for i in range(2 * n - 1):
+            left = i // 2
+            right = left + i % 2
+            while left >= 0 and right < n and s[left] == s[right]:
+                res += 1
+                left -= 1
+                right += 1
+
+        return res
+
+
+if __name__ == '__main__':
+    s = "aaaaa"
+    print(Solution().countSubstrings1(s))
+    print(Solution().countSubstrings2(s))
