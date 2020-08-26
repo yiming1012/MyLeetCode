@@ -14,55 +14,73 @@ Note:
 
 Although the above answer is in lexicographical order, your answer could be in any order you want.
 '''
+import collections
 from typing import List
 
 
 class Solution:
-    def letterCombinations(self, digits: str) -> List[str]:
-        n = len(digits)
-        if n == 0:
+    def letterCombinations1(self, digits: str) -> List[str]:
+        """
+        思路：回溯法模板
+        @param digits:
+        @return:
+        """
+        if not digits:
             return []
         dic = {'2': 'abc', '3': 'def', '4': 'ghi', '5': 'jkl',
                '6': 'mno', '7': 'pqrs', '8': 'tuv', '9': 'wxyz'}
+        n = len(digits)
 
-        def dfs(s, i):
-            if len(s) == n:
-                res.append(s)
+        def dfs(cur, arr):
+            if len(arr) == n:
+                res.append("".join(arr))
                 return
-            num = digits[i]
-            chars = dic[num]
-            for c in chars:
-                dfs(s + c, i + 1)
+
+            s = dic[digits[cur]]
+            for c in s:
+                dfs(cur + 1, arr + [c])
 
         res = []
-        dfs("", 0)
+        dfs(0, [])
         return res
 
     def letterCombinations2(self, digits: str) -> List[str]:
-        conversion = {'2': 'abc', '3': 'def', '4': 'ghi', '5': 'jkl', '6': 'mno', '7': 'pqrs', '8': 'tuv', '9': 'wxyz'}
-        if len(digits) == 0:
+        """
+        思路：
+        @param digits:
+        @return:
+        """
+        if not digits:
             return []
-        product = ['']
-        for k in digits:
-            product = [i + j for i in product for j in conversion[k]]
-        return product
-
+        dic = {'2': 'abc', '3': 'def', '4': 'ghi', '5': 'jkl',
+               '6': 'mno', '7': 'pqrs', '8': 'tuv', '9': 'wxyz'}
+        res = [""]
+        for i in range(len(digits)):
+            res = [x + y for x in res for y in dic[digits[i]]]
+        return res
 
     def letterCombinations3(self, digits: str) -> List[str]:
-        if not digits: return []
-        phone = ['abc','def','ghi','jkl','mno','pqrs','tuv','wxyz']
-        queue = ['']  # 初始化队列
-        for digit in digits:
-            for _ in range(len(queue)):
-                print(_,len(queue))
-                tmp = queue.pop(0)
-                for letter in phone[ord(digit)-50]:# 这里我们不使用 int() 转换字符串，使用ASCII码
-                    queue.append(tmp + letter)
-        return queue
+        if not digits:
+            return []
+        dic = {'2': 'abc', '3': 'def', '4': 'ghi', '5': 'jkl',
+               '6': 'mno', '7': 'pqrs', '8': 'tuv', '9': 'wxyz'}
+        res = [""]
+        n = len(digits)
+        queue = collections.deque()
+        queue.append("")
 
-
+        i = 0
+        while i < n:
+            for j in range(len(queue)):
+                num = queue.popleft()
+                for c in dic[digits[i]]:
+                    queue.append(num + c)
+            i += 1
+        return list(queue)
 
 
 if __name__ == '__main__':
     digits = "23"
+    print(Solution().letterCombinations1(digits))
+    print(Solution().letterCombinations2(digits))
     print(Solution().letterCombinations3(digits))
