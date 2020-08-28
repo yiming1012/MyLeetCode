@@ -17,33 +17,13 @@ from typing import List
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
         '''
-        执行用时 :40 ms, 在所有 Python3 提交中击败了97.88%的用户
-        内存消耗 :14.2 MB, 在所有 Python3 提交中击败了19.73%的用户
-        :param nums:
-        :return:
-        '''
-        maxValue = sumValue = nums[0]
-        i = 1
-        while i < len(nums):
-            if sumValue <= 0:
-                sumValue = nums[i]
-            else:
-                sumValue += nums[i]
-            i += 1
-
-            if sumValue > maxValue:
-                maxValue = sumValue
-        return maxValue
-
-
-    def maxSubArray2(self, nums: List[int]) -> int:
-        '''
         如果前面的数之和小于0，那么与后面的数相加，只会更小。
         所以，当前面的presum小于0时，presum=num，大于0则继续相加
         每次计算最大值
         :param nums:
         :return:
         '''
+
         res = nums[0]
         presum = 0
         for num in nums:
