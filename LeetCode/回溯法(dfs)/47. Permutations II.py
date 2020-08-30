@@ -20,25 +20,37 @@ from typing import List
 
 class Solution:
     def permuteUnique(self, nums: List[int]) -> List[List[int]]:
-        '''
-        执行用时 :2180 ms, 在所有 Python3 提交中击败了5.03%的用户
-        内存消耗 :14 MB, 在所有 Python3 提交中击败了5.78%的用户
-        :param nums:
-        :return:
-        '''
-        def backtrack(sol, check):
-            if len(sol) == len(nums) and sol not in res:
-                res.append(sol)
-                return
-
-            for i in range(len(nums)):
-                if check[i] == 1:
-                    continue
-                check[i] = 1
-                backtrack(sol + [nums[i]], check)
-                check[i] = 0
-
+        """
+        思路：关键在于去重
+        1. 以[1,1,2]为例，当第二个1出现时，看看前面一个1是否被访问过，如果不在同一层，则说明前面的已经被访问过了，所以这一轮continue
+        2. if i > 0 and nums[i] == nums[i - 1] and not visited[i - 1]:continue
+        @param nums:
+        @return:
+        """
+        nums.sort()
+        print(nums)
+        n = len(nums)
         res = []
-        check = [0 for i in range(len(nums))]
-        backtrack([], check)
+        visited = [False] * n
+
+        def backtrack(arr):
+            print(arr)
+            if len(arr) == n:
+                res.append(arr.copy())
+                return
+            for i, num in enumerate(nums):
+                if i > 0 and nums[i] == nums[i - 1] and not visited[i - 1]:
+                    continue
+
+                if not visited[i]:
+                    visited[i] = True
+                    backtrack(arr + [num])
+                    visited[i] = False
+
+        backtrack([])
         return res
+
+
+if __name__ == '__main__':
+    nums = [2, 3, 3, 4]
+    print(Solution().permuteUnique(nums))
