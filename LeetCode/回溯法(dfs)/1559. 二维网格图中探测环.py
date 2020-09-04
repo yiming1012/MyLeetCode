@@ -82,7 +82,7 @@ class Solution:
                     new_x = x + dx[i]
                     new_y = y + dy[i]
                     # 如果新的位置没有越界，并且grid[x][y] = grid[new_x][new_y]
-                    if new_x >= 0 and new_x < m and new_y >= 0 and new_y < n and grid[new_x][new_y] == grid[x][y]:
+                    if 0 <= new_x < m and 0 <= new_y < n and grid[new_x][new_y] == grid[x][y]:
                         # 如果(newx, new_y) 已经访问过了，说明找到了环
                         # print(vis[new_x][new_y])
                         if vis[new_x][new_y]:
@@ -135,3 +135,38 @@ class Solution:
                     if union(i * n + j, i * n + j - 1):
                         return True
         return False
+
+    def containsCycle3(self, grid: List[List[str]]) -> bool:
+        m, n = len(grid), len(grid[0])
+        # 注意这里0和1相反 2和3相反，后面会用^来判断是否相反
+        pos = [(0, -1), (0, 1), (-1, 0), (1, 0)]
+        visited = set()
+
+        def dfs(x, y, p):
+            if (x, y) in visited:
+                return True
+            visited.add((x, y))
+            for index in range(4):
+                if index != p:
+                    i, j = pos[index]
+                    xi = x + i
+                    yj = y + j
+                    if 0 <= xi < m and 0 <= yj < n and grid[xi][yj] == grid[x][y]:
+                        if dfs(xi, yj, index ^ 1):
+                            return True
+            return False
+
+        for i in range(m):
+            for j in range(n):
+                print(i, j, visited)
+                if (i, j) not in visited and dfs(i, j, -1):
+                    return True
+
+        return False
+
+
+if __name__ == '__main__':
+    grid = [["a", "b", "b"], ["b", "z", "b"], ["b", "b", "a"]]
+    print(Solution().containsCycle1(grid))
+    print(Solution().containsCycle2(grid))
+    print(Solution().containsCycle3(grid))
