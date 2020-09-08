@@ -50,7 +50,6 @@ class Solution:
         1、建立一个二维的dp数组，dp[i][j]表示从i到j最长的回文长度
         2、当s[i]==s[j]时，dp[i][j]=dp[i+1][j-1]+2
         3、当s[i]!=s[j]时，dp[i][j]=max(dp[i+1][j],dp[i][j-1])
-
         """
         n = len(s)
         dp = [[0] * n for _ in range(n)]
