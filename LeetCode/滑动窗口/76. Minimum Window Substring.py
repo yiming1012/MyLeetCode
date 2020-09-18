@@ -20,25 +20,6 @@ import collections
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
         """
-        此方法超时
-        """
-        ns = len(s)
-        nt = len(t)
-        tt = collections.Counter(t)
-
-        for i in range(nt, ns + 1):
-            for j in range(0, ns + 1 - i):
-                window = s[j:j + i]
-                ss = collections.Counter(window)
-                for k, v in tt.items():
-                    if k not in ss or ss[k] < v:
-                        break
-                else:
-                    return window
-        return ""
-
-    def minWindow2(self, s: str, t: str) -> str:
-        """
         执行用时 :720 ms, 在所有 Python3 提交中击败了11.95%的用户
         内存消耗 :13.9 MB, 在所有 Python3 提交中击败了7.69%的用户
         思路：滑动窗口
@@ -65,4 +46,7 @@ class Solution:
         return s[start:end + 1] if start != -1 else ""
 
 
-
+if __name__ == '__main__':
+    S = "ADOBECODEBANC"
+    T = "ABC"
+    print(Solution().minWindow(S, T))

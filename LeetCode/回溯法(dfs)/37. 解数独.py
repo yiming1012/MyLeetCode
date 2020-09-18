@@ -30,7 +30,7 @@ from typing import List
 
 
 class Solution:
-    def solveSudoku(self, board: List[List[str]]) -> None:
+    def solveSudoku1(self, board: List[List[str]]) -> None:
         """
         Do not return anything, modify board in-place instead.
         """
@@ -80,6 +80,100 @@ class Solution:
         dfs(0, 0)
         return board
 
+    def solveSudoku2(self, board: List[List[str]]) -> None:
+        """
+        思路：回溯法
+        1. 选出需要填表的坐标进行回溯
+        2. 分别记录行、列和九宫格内数字是否被选过
+        3. 当表格中所有空格都被填完，标记valid并返回，因为没有复原状态，所以返回后board的值就是填满后的值
+        """
+        row = [[0] * 10 for _ in range(9)]
+        col = [[0] * 10 for _ in range(9)]
+        box = [[0] * 10 for _ in range(9)]
+        fill = []
+        for i in range(9):
+            for j in range(9):
+                if board[i][j] != ".":
+                    num = int(board[i][j])
+                    row[i][num] = 1
+                    col[j][num] = 1
+                    box[i // 3 * 3 + j // 3][num] = 1
+                else:
+                    fill.append((i, j))
+
+        def backtrack(index):
+            # backtrack
+            if index == len(fill):
+                self.valid = True
+                return
+            i, j = fill[index]
+            for num in range(1, 10):
+                if row[i][num] == 0 and col[j][num] == 0 and box[i // 3 * 3 + j // 3][num] == 0:
+                    row[i][num] = 1
+                    col[j][num] = 1
+                    box[i // 3 * 3 + j // 3][num] = 1
+                    board[i][j] = str(num)
+                    backtrack(index + 1)
+                    if self.valid:
+                        return
+                    board[i][j] = "."
+                    row[i][num] = 0
+                    col[j][num] = 0
+                    box[i // 3 * 3 + j // 3][num] = 0
+
+        self.valid = False
+        backtrack(0)
+        return board
+
+    def solveSudoku3(self, board: List[List[str]]) -> None:
+        """
+        思路：位运算
+        1. 构造9位的二进制，判断数字是否出现过
+        @param board:
+        @return:
+        """
+
+        def flip(i: int, j: int, digit: int):
+            line[i] ^= (1 << digit)
+            column[j] ^= (1 << digit)
+            block[i // 3][j // 3] ^= (1 << digit)
+
+        def dfs(pos: int):
+            nonlocal valid
+            if pos == len(spaces):
+                valid = True
+                return
+
+            i, j = spaces[pos]
+            mask = ~(line[i] | column[j] | block[i // 3][j // 3]) & 0x1ff
+            while mask:
+                digitMask = mask & (-mask)
+                digit = bin(digitMask).count("0") - 1
+                flip(i, j, digit)
+                board[i][j] = str(digit + 1)
+                dfs(pos + 1)
+                flip(i, j, digit)
+                mask &= (mask - 1)
+                if valid:
+                    return
+
+        line = [0] * 9
+        column = [0] * 9
+        block = [[0] * 3 for _ in range(3)]
+        valid = False
+        spaces = list()
+
+        for i in range(9):
+            for j in range(9):
+                if board[i][j] == ".":
+                    spaces.append((i, j))
+                else:
+                    digit = int(board[i][j]) - 1
+                    flip(i, j, digit)
+
+        dfs(0)
+        return board
+
 
 if __name__ == '__main__':
     board = [
@@ -93,4 +187,6 @@ if __name__ == '__main__':
         [".", ".", ".", "4", "1", "9", ".", ".", "5"],
         [".", ".", ".", ".", "8", ".", ".", "7", "9"]
     ]
-    print(Solution().solveSudoku(board))
+    print(Solution().solveSudoku1(board))
+    print(Solution().solveSudoku2(board))
+    print(Solution().solveSudoku3(board))
