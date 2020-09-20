@@ -22,8 +22,9 @@ class Solution:
     def permuteUnique(self, nums: List[int]) -> List[List[int]]:
         """
         思路：关键在于去重
-        1. 以[1,1,2]为例，当第二个1出现时，看看前面一个1是否被访问过，如果不在同一层，则说明前面的已经被访问过了，所以这一轮continue
-        2. if i > 0 and nums[i] == nums[i - 1] and not visited[i - 1]:continue
+        1. 如果当前数字和前一个相同，并且前一个没有被访问过，那说明前一个数字被回溯过，此时需要跳过避免重复计算
+        2. 以[1,1,2]为例，当第二个1出现时，看看前面一个1是否被访问过，如果不在同一层，则说明前面的已经被访问过了，所以这一轮continue
+        3. if i > 0 and nums[i] == nums[i - 1] and not visited[i - 1]:continue
         @param nums:
         @return:
         """
