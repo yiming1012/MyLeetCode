@@ -41,6 +41,12 @@ class TreeNode:
 
 class Solution:
     def bstToGst(self, root: TreeNode) -> TreeNode:
+        """
+        思路：反向中序遍历
+        1. 先遍历最大的节点，记录当前所有访问过的节点之和，并赋值给新的节点
+        @param root:
+        @return:
+        """
         def dfs(root):
             if not root:
                 return
