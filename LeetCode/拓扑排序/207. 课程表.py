@@ -36,7 +36,10 @@ from typing import List
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
         """
-        拓扑排序模板
+        思路：拓扑排序
+        1. 当某个点的入度减为0，添加到队列中
+        2. 遍历入度为0的点u，并将边(u,v)中v的入度-1
+        3. 最后判断所有点是否均被访问过
         """
         edges = collections.defaultdict(list)
         indeg = [0] * numCourses
