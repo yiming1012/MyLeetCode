@@ -57,8 +57,8 @@ class Solution:
 
     def minimumCost2(self, N: int, connections: List[List[int]]) -> int:
         parent = [i for i in range(N)]
-        conections.sort(key=lambda x: x[2])
-        print(conections)
+        connections.sort(key=lambda x: x[2])
+        print(connections)
         edge = 0
         res = 0
 
@@ -67,7 +67,7 @@ class Solution:
                 parent[x] = find(parent[x])
             return parent[x]
 
-        for u, v, w in conections:
+        for u, v, w in connections:
             x = find(u - 1)
             y = find(v - 1)
             if x != y:
@@ -82,6 +82,6 @@ class Solution:
 
 if __name__ == '__main__':
     N = 3
-    conections = [[1, 2, 5], [1, 3, 6], [2, 3, 1]]
-    print(Solution().minimumCost1(N, conections))
-    print(Solution().minimumCost2(N, conections))
+    connections = [[1, 2, 5], [1, 3, 6], [2, 3, 1]]
+    print(Solution().minimumCost1(N, connections))
+    print(Solution().minimumCost2(N, connections))
