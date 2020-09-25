@@ -83,27 +83,24 @@ class Solution:
 
     def sortArray3(self, nums: List[int]) -> List[int]:
         '''
-        冒泡排序：nums[i]与nums[j]比较，nums[i]更大就交换
+        选择排序：nums[i]与nums[j]比较，nums[i]更大就交换
         :param nums:
         :return:
         '''
         for i in range(len(nums)):
-            flag = 0
             for j in range(i, len(nums)):
                 if nums[i] > nums[j]:
-                    flag = 1
                     nums[i], nums[j] = nums[j], nums[i]
-            if flag == 0:
-                break
+
         return nums
 
     def sortArray4(self, nums: List[int]) -> List[int]:
         '''
-        执行用时 :536 ms, 在所有 Python3 提交中击败了17.95%的用户
-        内存消耗 :20.8 MB, 在所有 Python3 提交中击败了5.71%的用户
+        思路：归并排序
         :param nums:
         :return:
         '''
+
         def helper(nums):
             if len(nums) < 2:
                 return nums
@@ -114,25 +111,30 @@ class Solution:
 
         return helper(nums)
 
-    def counting_sort(nums):
-        if not nums: return []
-        n = len(nums)
-        _min = min(nums)
-        _max = max(nums)
-        tmp_arr = [0] * (_max - _min + 1)
-        for num in nums:
-            tmp_arr[num - _min] += 1
-        j = 0
-        for i in range(n):
-            while tmp_arr[j] == 0:
-                j += 1
-            nums[i] = j + _min
-            tmp_arr[j] -= 1
+    def sortArray5(self, nums: List[int]) -> List[int]:
+        """
+        思路：冒泡排序
+        1. 将相邻的两个数中较大的数移到最上面，就像冒泡一样
+        2. 优化：如果某一遍历，数组中的元素没有交换位置，说明已经有序，可退出
+        :param nums:
+        :return:
+        """
+        for i in range(len(nums) - 1, -1, -1):
+            flag = 0
+            for j in range(1, i + 1):
+                if nums[j - 1] > nums[j]:
+                    flag = 1
+                    nums[j - 1], nums[j] = nums[j], nums[j - 1]
+            if flag == 0:
+                break
         return nums
 
 
-
 if __name__ == '__main__':
-    nums = [5, 3, 4, 1]
+    nums = [5, 3, 4, 1, 2]
     s = Solution()
+    print(s.sortArray1(nums))
     print(s.sortArray2(nums))
+    print(s.sortArray3(nums))
+    print(s.sortArray4(nums))
+    print(s.sortArray5(nums))
