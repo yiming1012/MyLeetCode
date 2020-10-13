@@ -1,31 +1,3 @@
-# 合并两个有序数组
-def merge(a, b):
-    c = []
-    i, j = 0, 0
-    while i < len(a) and j < len(b):
-        if a[i] > b[j]:
-            c.append(b[j])
-            j += 1
-        else:
-            c.append(a[i])
-            i += 1
-    if i == len(a):
-        c = c + b[j:]
-    else:
-        c = c + a[i:]
-    return c
-
-
-# 递归拆分数组
-def merge_sort(nums):
-    if len(nums) <= 1:
-        return nums
-    mid = len(nums) // 2
-    left = merge_sort(nums[:mid])
-    right = merge_sort(nums[mid:])
-    return merge(left, right)
-
-
 class Solution:
     # 排序两个数组
     def sort(self, a, b):
@@ -57,5 +29,4 @@ class Solution:
 
 if __name__ == '__main__':
     a = [4, 7, 8, 3, 5, 9]
-    # print(merge_sort(a))
     print(Solution().merge(a))
