@@ -31,6 +31,7 @@ class NumArray:
     def sumRange(self, i: int, j: int) -> int:
         return self.presum[min(self.n, j + 1)] - self.presum[max(i, 0)]
 
+
 # Your NumArray object will be instantiated and called as such:
 # obj = NumArray(nums)
 # param_1 = obj.sumRange(i,j)
