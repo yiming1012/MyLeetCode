@@ -34,6 +34,17 @@ from typing import List
 
 class Solution:
     def minimumCost1(self, N: int, connections: List[List[int]]) -> int:
+        """
+        思路：kruskal（并查集）
+        1. 将所有边按照权重大小排序
+        2. 遍历排好序的边集合，通过并查集相连
+            a. 如果当前边的两个顶点，已在最小生成树中，跳过
+            b. 如果当前边的两个顶点，不在最小生成树中，则将该边加入到最小生成树中
+        3. 如果构成的图的边等于顶点数-1，退出
+        @param N:
+        @param connections:
+        @return:
+        """
         if len(connections) < N - 1:
             return -1
         connections.sort(key=lambda a: a[2])
@@ -56,7 +67,7 @@ class Solution:
         return res
 
     def minimumCost2(self, N: int, connections: List[List[int]]) -> int:
-        parent = [i for i in range(N)]
+        parent = [j for j in range(N)]
         connections.sort(key=lambda x: x[2])
         print(connections)
         edge = 0
