@@ -25,7 +25,7 @@ class ListNode:
 
 
 class Solution:
-    def swapPairs(self, head: ListNode) -> ListNode:
+    def swapPairs1(self, head: ListNode) -> ListNode:
         if not head or not head.next:
             return head
         dummy = pre = ListNode(0)
@@ -45,11 +45,45 @@ class Solution:
 
         return dummy.next
 
+    def swapPairs2(self, head: ListNode) -> ListNode:
+        if not head or not head.next:
+            return head
+        dummy = ListNode(0)
+        dummy.next = head
+        pre = dummy
+        cur = head
+
+        while cur and cur.next:
+            nex = cur.next
+            pre.next = nex
+            cur.next = nex.next
+            nex.next = cur
+
+            pre = cur
+            cur = cur.next
+
+        return dummy.next
+
+    def swapPairs3(self, head: ListNode) -> ListNode:
+        """
+        思路：递归
+        @param head:
+        @return:
+        """
+        if not head or not head.next:
+            return head
+        nex = head.next
+        head.next = self.swapPairs3(nex.next)
+        nex.next = head
+        return nex
+
 
 if __name__ == '__main__':
     arr = [1, 2, 3, 4, 5]
     # 数组转换为链表
     head = ArrToLinkedList().arrToListNode(arr)
-    node = Solution().swapPairs(head)
+    # node = Solution().swapPairs1(head)
+    # node = Solution().swapPairs2(head)
+    node = Solution().swapPairs3(head)
     # 链表转换为数组
     print(LinkedListToArr().listNodeToArr(node))
