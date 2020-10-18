@@ -30,35 +30,6 @@ class ListNode:
 class Solution:
     def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
         '''
-        执行用时 :36 ms, 在所有 Python3 提交中击败了81.39%的用户
-        内存消耗 :13.5 MB, 在所有 Python3 提交中击败了5.41%的用户
-        :param head:
-        :param n:
-        :return:
-        '''
-        if not head:
-            return None
-        dummy = ListNode(0)
-        dummy.next = head
-        node = head
-        while n > 0 and node:
-            n -= 1
-            node = node.next
-        if n > 0:
-            return None
-        if n == 0 and not node:
-            dummy.next = head.next
-            return dummy.next
-        while node.next:
-            head = head.next
-            node = node.next
-        head.next = head.next.next
-        return dummy.next
-
-    def removeNthFromEnd2(self, head: ListNode, n: int) -> ListNode:
-        '''
-        执行用时 :48 ms, 在所有 Python3 提交中击败了31.34%的用户
-        内存消耗 :13.7 MB, 在所有 Python3 提交中击败了5.41%的用户
         思路：1、设置一个dummy Node，下一位指向head，因为head有可能被删掉
         :param head:
         :param n:
@@ -72,11 +43,26 @@ class Solution:
             fast = fast.next
             n -= 1
 
-        # if n>0:
-        #     return dummy.next
-
         while fast.next:
             slow = slow.next
             fast = fast.next
         slow.next = slow.next.next
         return dummy.next
+
+    cur = 0
+
+    def removeNthFromEnd2(self, head: ListNode, n: int) -> ListNode:
+        """
+        思路：递归
+        1. 当cur==n时，返回当前的下一个节点
+        @param head:
+        @param n:
+        @return:
+        """
+        if not head:
+            return
+        head.next = self.removeNthFromEnd(head.next, n)
+        self.cur += 1
+        if self.cur == n:
+            return head.next
+        return head
