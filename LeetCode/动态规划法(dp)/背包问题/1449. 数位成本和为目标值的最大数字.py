@@ -51,30 +51,27 @@ cost.length == 9
 链接：https://leetcode-cn.com/problems/form-largest-integer-with-digits-that-add-up-to-target
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 """
+from typing import List
+
+
 class Solution:
-    # def largestNumber(self, cost: List[int], target: int) -> str:
-    #     n=len(cost)
-    #     dp=[[float('-inf')]*(target+1) for _ in range(n+1)]
-    #     for i in range(n+1):
-    #         dp[i][0]=0
-
-    #     for i in range(n-1,-1,-1):
-    #         for j in range(target+1):
-    #             dp[i+1][j]=dp[i][j]
-    #             if j>=cost[i] and dp[i+1][j-cost[i]]!=float('-inf'):
-    #                 dp[i+1][j]=max(dp[i+1][j],(dp[i+1][j-cost[i]])*10+(i+1))
-    #     print(dp)
-    #     return str(dp[-1][-1]) if dp[-1][-1]>0 else "0"
-
-
-    def largestNumber(self, cost: 'List[int]', target: int) -> str:
-        dp = [float("-inf")] * (target+1)
+    def largestNumber(self, cost: List[int], target: int) -> str:
+        """
+        思路：完全背包问题
+        @param cost:
+        @param target:
+        @return:
+        """
+        dp = [float('-inf')] * (target + 1)
         dp[0] = 0
         for i in range(8, -1, -1):
-            for j in range(cost[i], target+1):
-                dp[j] = max(dp[j], dp[j-cost[i]] * 10 + (i+1))
-        return str(dp[target]) if dp[target] > float("-inf") else "0"
+            for j in range(target + 1):
+                if j >= cost[i]:
+                    dp[j] = max(dp[j], dp[j - cost[i]] * 10 + i + 1)
+        return str(dp[-1]) if dp[-1] != float('-inf') else "0"
 
 
-
-
+if __name__ == '__main__':
+    cost = [4, 3, 2, 5, 6, 7, 2, 5, 5]
+    target = 9
+    print(Solution().largestNumber(cost, target))
