@@ -76,9 +76,6 @@ class Solution:
 
         return str(max(0, dfs(target)))
 
-    def largestNumber2(self, cost: List[int], target: int) -> str:
-        print(cost, target)
-
 
 if __name__ == '__main__':
     cost = [4, 3, 2, 5, 6, 7, 2, 5, 5]
