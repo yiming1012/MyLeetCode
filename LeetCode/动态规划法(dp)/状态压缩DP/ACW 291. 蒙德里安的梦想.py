@@ -41,40 +41,36 @@ ACW 291.蒙德里安的梦想
 51205
 """
 N = 12
-M = 1 << N
-f = [[0] * M for _ in range(N)]
-st = [False] * M
+cnt = [False] * (1 << N)
+dp = [[0] * (1 << N) for _ in range(N)]
+n, m = map(int, input().split())
+while n or m:
+    for i in range(N):
+        for j in range(1 << N):
+            dp[i][j] = 0
 
-if __name__ == "__main__":
+    dp[0][0] = 1
+    for i in range(1 << n):
+        cnt[i] = False
+        count = 0
+        for j in range(n):
+            if i >> j & 1:
+                # 前面连续0的个数为奇数
+                if count & 1:
+                    break
+                count = 0
+            else:
+                count += 1
+        if count & 1 == 0:
+            cnt[i] = True
+
+    dp[0][0] = 1
+    for i in range(1, m + 1):
+        for j in range(1 << n):
+            for k in range(1 << n):
+                # 如果当前列和前一列没有交集，并且当前行连续0的个数为偶数
+                if j & k == 0 and cnt[j | k]:
+                    dp[i][j] += dp[i - 1][k]
+
+    print(dp[m][0])
     n, m = map(int, input().split())
-    while n or m:
-        # 初始化数组
-        for i in range(len(f)):
-            for j in range(len(f[0])):
-                f[i][j] = 0
-        for i in range(len(st)):
-            st[i] = False
-        # 预处理
-        for i in range(1 << n):
-            st[i] = True
-            cnt = 0
-            for j in range(n):
-                if i >> j & 1:
-                    if cnt & 1:
-                        st[i] = False
-                    cnt = 0
-                else:
-                    cnt += 1
-            if cnt & 1: st[i] = False
-        # 初始化
-        f[0][0] = 1
-        for i in range(1, m + 1):
-            # 当前列
-            for j in range(1 << n):
-                # 前一列
-                for k in range(1 << n):
-                    if j & k == 0 and st[j | k]:
-                        f[i][j] += f[i - 1][k]
-
-        print(f[m][0])
-        n, m = map(int, input().split())
