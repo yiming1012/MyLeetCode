@@ -67,6 +67,8 @@ if __name__ == '__main__':
         print(low)
 
     import bisect
+
+
     def reversePairs(self, nums: List[int]) -> int:
         q = []
         res = 0

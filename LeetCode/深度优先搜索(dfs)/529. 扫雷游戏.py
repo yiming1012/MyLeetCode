@@ -77,7 +77,8 @@ class Solution:
         n = len(board[0])
 
         def in_board(x, y):
-            """判断坐标是否在限定边界内
+            """
+            判断坐标是否在限定边界内
             """
             return 0 <= x < m and 0 <= y < n
 

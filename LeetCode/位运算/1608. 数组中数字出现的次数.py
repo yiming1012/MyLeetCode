@@ -32,7 +32,7 @@ class Solution:
             s ^= num
         # print(s)
         # 这里通过最后一个不同的0/1区分，需要求lowbit
-        lowbit = s & (~s + 1)
+        # lowbit = s & (~s + 1)
         lowbit = s & (-s)
         # print(lowbit)
         for num in nums:

@@ -27,55 +27,41 @@ from typing import List
 
 
 class Solution:
-    # self.arr = []
     def solve(self, board: List[List[str]]) -> None:
-        '''
-        执行用时 :144 ms, 在所有 Python3 提交中击败了76.28%的用户
-        内存消耗 :60.1 MB, 在所有 Python3 提交中击败了5.11%的用户
-        :param board:
-        :return:
-        '''
         """
-        Do not return anything, modify board in-place instead.
+        思路：从边界出发，将与边界连通的"O"赋值为"A"，等到所有的都遍历完后，为"O"的即为封闭的，为"A"的即为非封闭的
+        @param board:
+        @return:
         """
-        if len(board) == 0:
-            return []
+        if not board:
+            return
 
-        row = len(board)
-        col = len(board[0])
-        visited = [[0 for _ in range(col)] for _ in range(row)]
+        n, m = len(board), len(board[0])
 
-        # print(visited)
+        def dfs(x, y):
+            if not 0 <= x < n or not 0 <= y < m or board[x][y] != 'O':
+                return
 
-        def dfs(i, j):
-            if i < 0 or i >= row or j < 0 or j >= col or visited[i][j] == 1 or board[i][j] == 'X':
-                return 0
-            visited[i][j] = 1
-            self.arr.append([i, j])
-            dfs(i - 1, j)
-            dfs(i + 1, j)
-            dfs(i, j - 1)
-            dfs(i, j + 1)
-            # print("aaa:",self.arr)
+            board[x][y] = "A"
+            dfs(x + 1, y)
+            dfs(x - 1, y)
+            dfs(x, y + 1)
+            dfs(x, y - 1)
 
-        for i in range(row):
-            for j in range(col):
-                self.arr = []
-                dfs(i, j)
-                # print("arr:",self.arr)
-                flag = 0
-                for num in self.arr:
-                    if num[0] in [0, row - 1] or num[1] in [0, col - 1]:
-                        flag = 1
-                if flag == 0:
-                    for num in self.arr:
-                        # print("abc:",num[0],num[1])
-                        board[num[0]][num[1]] = 'X'
+        for i in range(n):
+            dfs(i, 0)
+            dfs(i, m - 1)
 
-        return board
+        for i in range(m - 1):
+            dfs(0, i)
+            dfs(n - 1, i)
 
-
-    
+        for i in range(n):
+            for j in range(m):
+                if board[i][j] == "A":
+                    board[i][j] = "O"
+                elif board[i][j] == "O":
+                    board[i][j] = "X"
 
 
 if __name__ == '__main__':

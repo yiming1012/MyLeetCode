@@ -18,6 +18,7 @@
 
 0 <= 数组长度 <= 50000
 '''
+from typing import List
 
 
 class Solution:
