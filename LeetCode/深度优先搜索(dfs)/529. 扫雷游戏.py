@@ -64,6 +64,9 @@ Click : [1,2]
 链接：https://leetcode-cn.com/problems/minesweeper
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 """
+from typing import List
+
+
 class Solution:
     def updateBoard(self, board: List[List[str]], click: List[int]) -> List[List[str]]:
          # 定义 8 个方位
@@ -74,7 +77,8 @@ class Solution:
         n = len(board[0])
 
         def in_board(x, y):
-            """判断坐标是否在限定边界内
+            """
+            判断坐标是否在限定边界内
             """
             return 0 <= x < m and 0 <= y < n
 
