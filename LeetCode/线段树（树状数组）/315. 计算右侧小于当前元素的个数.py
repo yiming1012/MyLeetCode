@@ -55,3 +55,43 @@ class Solution:
             BIT.update(posID)
 
         return ans[::-1]
+
+
+class Solution:
+    def countSmaller(self, nums: List[int]) -> List[int]:
+        def lowbit(x):
+            return x & (-x)
+
+        def query(x):
+            res = 0
+            while x:
+                res += cnt[x]
+                x -= lowbit(x)
+            return res
+
+        def update(x):
+            while x < n + 1:
+                cnt[x] += 1
+                x += lowbit(x)
+
+        # 离散化
+        rank = {}
+        st = set()
+        sortedArr = sorted(nums)
+        n = 0
+        for num in sortedArr:
+            if num not in st:
+                n += 1
+                rank[num] = n
+                st.add(num)
+
+        # 创建树节点数组
+        cnt = [0] * (n + 1)
+
+        # 遍历
+        ans = []
+        for i, num in enumerate(nums[::-1]):
+            left = query(rank[num] - 1)
+            ans.append(left)
+            update(rank[num])
+        return ans[::-1]
