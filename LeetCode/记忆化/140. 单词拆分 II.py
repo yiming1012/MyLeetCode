@@ -51,7 +51,7 @@ class Solution:
         wordDict = set(wordDict)
 
         def dfs(temp, pos):
-            num = len(res)  # 回溯前先记下答案中有多少个元素
+            num = len(res)  # 回溯前先记下答案中有多少个元素?
             if pos == n:
                 res.append(" ".join(temp))
                 return
