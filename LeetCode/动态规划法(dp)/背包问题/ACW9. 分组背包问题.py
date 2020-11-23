@@ -35,23 +35,21 @@
 8
 """
 N, V = map(int, input().split())
-# print(N,V)
-pack = []
+nums = [] * N
 for i in range(N):
-    S = int(input())
-    # print(S)
+    n = int(input())
     arr = []
-    for j in range(S):
+    for j in range(n):
         arr.append(list(map(int, input().split())))
-    pack.append(arr)
-# print(pack)
+    nums.append(arr)
 
 dp = [0] * (V + 1)
+
 for i in range(N):
-    arr = pack[i]
+    arr = nums[i]
     for j in range(V, -1, -1):
-        for k in range(len(arr)):
-            v, w = arr[k]
+        for v, w in arr:
             if j >= v:
                 dp[j] = max(dp[j], dp[j - v] + w)
+
 print(dp[-1])
