@@ -32,11 +32,12 @@ Note:
 链接：https://leetcode-cn.com/problems/maximize-sum-of-array-after-k-negations
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 '''
+import heapq
 from typing import List
 
 
 class Solution:
-    def largestSumAfterKNegations(self, A: List[int], K: int) -> int:
+    def largestSumAfterKNegations1(self, A: List[int], K: int) -> int:
         '''
         执行用时 :68 ms, 在所有 Python3 提交中击败了61.61%的用户
         内存消耗 :13.8 MB, 在所有 Python3 提交中击败了20.00%的用户
@@ -44,29 +45,35 @@ class Solution:
         :param K:
         :return:
         '''
-        A.sort()
         # 负数变为正数
         # 如果可仍然大于0，获取最小值，进行状态变化
-        for i in range(len(A)):
-            if A[i] < 0 and K > 0:
-                A[i] = -A[i]
-                K -= 1
-            else:
+        A.sort()
+        for i, a in enumerate(A):
+            if a >= 0 or K <= 0:
                 break
-        if K > 0:
-            return sum(A) if K % 2 == 0 else sum(A) - 2 * min(A)
-        else:
-            return sum(A)
-
-    def largestSumAfterKNegations2(self, A: List[int], K: int) -> int:
-        '''
-        简单粗暴
-        :param A:
-        :param K:
-        :return:
-        '''
-        for i in range(K):
-            A.sort()
-            A[0] = -A[0]
+            A[i] = -a
+            K -= 1
+        if K % 2:
+            return sum(A) - 2 * min(A)
         return sum(A)
 
+    def largestSumAfterKNegations2(self, A: List[int], K: int) -> int:
+        """
+        思路：每次修改堆顶元素
+        @param A:
+        @param K:
+        @return:
+        """
+        heapq.heapify(A)
+        while K:
+            min_ = heapq.heappop(A)
+            heapq.heappush(A, -min_)
+            K -= 1
+        return sum(A)
+
+
+if __name__ == '__main__':
+    A = [4, 2, 3]
+    K = 1
+    print(Solution().largestSumAfterKNegations1(A, K))
+    print(Solution().largestSumAfterKNegations2(A, K))
