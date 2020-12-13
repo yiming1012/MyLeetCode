@@ -31,7 +31,7 @@ from typing import List
 
 
 class Solution:
-    def wiggleMaxLength(self, nums: List[int]) -> int:
+    def wiggleMaxLength1(self, nums: List[int]) -> int:
         """
         思路：判断当前差分和前一个差分的符号是否为相反数
         @param nums:
@@ -50,7 +50,19 @@ class Solution:
                 pre = diff
         return res
 
+    def wiggleMaxLength2(self, nums: List[int]) -> int:
+        if not nums: return 0
+        up, down = 1, 1
+        n = len(nums)
+        for i in range(1, n):
+            if nums[i] > nums[i - 1]:
+                up = down + 1
+            elif nums[i] < nums[i - 1]:
+                down = up + 1
+        return max(up, down)
+
 
 if __name__ == '__main__':
     nums = [1, 7, 4, 9, 2, 5]
-    print(Solution().wiggleMaxLength(nums))
+    print(Solution().wiggleMaxLength1(nums))
+    print(Solution().wiggleMaxLength2(nums))
