@@ -30,7 +30,7 @@ class Solution:
         思路：
         1. 找到第一个前面字符大于后面字符的位置
         2 从后往前判断，前面大的字符减一后，是否不小于前面的字符
-        @param N: 
+        @param N:
         @return:
         """
         arr = list(str(N))
