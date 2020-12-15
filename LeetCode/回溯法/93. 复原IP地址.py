@@ -15,7 +15,7 @@ from typing import List
 
 
 class Solution:
-    def restoreIpAddresses(self, s):
+    def restoreIpAddresses1(self, s):
         """
         思路：回溯法
         1. 每一位ip地址最大只有三个字符，0~255
@@ -42,7 +42,32 @@ class Solution:
         backtrack(s, [])
         return res
 
+    def restoreIpAddresses2(self, s: str) -> List[str]:
+        """
+        说明：比上面效率高，不涉及到字符串的切分，不会产生新对象
+        @param s:
+        @return:
+        """
+        res = []
+        n = len(s)
+        if n < 4 or n > 12:
+            return res
+
+        def backtrack(arr, cur):
+            if cur == n and len(arr) == 4:
+                res.append(".".join(arr))
+                return
+            if len(arr) < 4:
+                for i in range(cur, min(cur + 3, n)):
+                    tmp = s[cur:i + 1]
+                    if str(int(tmp)) == tmp and 0 <= int(tmp) <= 255:
+                        backtrack(arr + [tmp], i + 1)
+
+        backtrack([], 0)
+        return res
+
 
 if __name__ == '__main__':
     s = "25525511135"
-    print(Solution().restoreIpAddresses(s))
+    print(Solution().restoreIpAddresses1(s))
+    print(Solution().restoreIpAddresses2(s))
