@@ -62,21 +62,21 @@ class Solution:
         @param cost:
         @return:
         """
-        gasNum = 0
         n = len(gas)
+        start = 0
         count = 0
+        remain = 0
         for i in range(2 * n - 1):
-            if gasNum + gas[i % n] - cost[i % n] >= 0:
-                gasNum += gas[i % n] - cost[i % n]
+            i %= n
+            if remain + gas[i] - cost[i] >= 0:
+                remain += gas[i] - cost[i]
                 count += 1
             else:
-                if i >= n:
-                    return -1
-                gasNum = 0
+                remain = 0
                 count = 0
+                start = i + 1
             if count == n:
-                return i - n + 1
-
+                return start
         return -1
 
 
