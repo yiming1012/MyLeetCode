@@ -41,7 +41,7 @@ from typing import List
 
 
 class Solution:
-    def stoneGameVII(self, stones: List[int]) -> int:
+    def stoneGameVII1(self, stones: List[int]) -> int:
         """
         思路：动态规划法
         @param stones:
@@ -59,7 +59,31 @@ class Solution:
                 dp[i][j] = max(pre[j] - pre[i] - dp[i + 1][j], pre[j - 1] - pre[i - 1] - dp[i][j - 1])
         return dp[1][n]
 
+    def stoneGameVII2(self, stones: List[int]) -> int:
+        """
+        思路：记忆化递归
+        @param stones:
+        @return:
+        """
+        n = len(stones)
+        pre = [0] * (n + 1)
+        for i in range(n):
+            pre[i + 1] = pre[i] + stones[i]
+
+        memo = [[0] * (n + 1) for _ in range(n + 1)]
+
+        def dp(l, r):
+            if l == r:
+                return 0
+            if memo[l][r]:
+                return memo[l][r]
+            memo[l][r] = max(pre[r] - pre[l] - dp(l, r - 1), pre[r + 1] - pre[l + 1] - dp(l + 1, r))
+            return memo[l][r]
+
+        return dp(0, n - 1)
+
 
 if __name__ == '__main__':
     stones = [5, 3, 1, 4, 2]
-    print(Solution().stoneGameVII(stones))
+    print(Solution().stoneGameVII1(stones))
+    print(Solution().stoneGameVII2(stones))
