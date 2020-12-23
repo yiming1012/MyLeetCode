@@ -69,10 +69,10 @@ class Solution:
             if not root: return 0
             left = dfs(root.left)
             right = dfs(root.right)
-            num = root.val + left + right
+            subsum = root.val + left + right
             nonlocal res
-            res = max(res, num * (total - num))
-            return num
+            res = max(res, subsum * (total - subsum))
+            return subsum
 
         dfs(root)
         return res % mod
