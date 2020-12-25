@@ -56,7 +56,7 @@ class Solution:
                     i, j = l[0], l[1]
                     # print(i,j)
                     # print("ab:",a,b)
-                    if 0 <= a + i < m and 0 <= b + j < n and visit[a + i][b + j] == 0:
+                    if 0 <= a + i < m and 0 <= b + j < n and visit[a + i][b + j]:
                         dfs(a + i, b + j)
 
         dfs(0, 0)
