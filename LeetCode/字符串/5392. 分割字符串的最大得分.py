@@ -32,9 +32,11 @@
 2 <= s.length <= 500
 字符串 s 仅由字符 '0' 和 '1' 组成。
 '''
+
+
 class Solution:
     def maxScore(self, s: str) -> int:
-        mV=0
-        for i in range(1,len(s)):
-            mV=max(mV,s[:i].count('0')+s[i:].count('1'))
+        mV = 0
+        for i in range(1, len(s)):
+            mV = max(mV, s[:i].count('0') + s[i:].count('1'))
         return mV
