@@ -45,7 +45,7 @@ s 中所有字符都是小写字母。
 
 
 class Solution:
-    def minInsertions(self, s: str) -> int:
+    def minInsertions1(self, s: str) -> int:
         """
         思路：动态规划法
         1. s翻转后s_，两者求最长公共子序列，剩余的则是要插入的
@@ -62,6 +62,25 @@ class Solution:
                 else:
                     dp[i + 1][j + 1] = max(dp[i + 1][j], dp[i][j + 1])
         return n - dp[-1][-1]
+
+
+    def minInsertions2(self, s: str) -> int:
+        """
+        思路：区间dp
+        @param s:
+        @return:
+        """
+        n = len(s)
+        dp = [[0] * n for _ in range(n)]
+
+        for span in range(2, n + 1):
+            for l in range(n - span + 1):
+                r = l + span - 1
+                if s[l] == s[r]:
+                    dp[l][r] = dp[l + 1][r - 1]
+                else:
+                    dp[l][r] = min(dp[l + 1][r], dp[l][r - 1]) + 1
+        return dp[0][n - 1]
 
 
 if __name__ == '__main__':
