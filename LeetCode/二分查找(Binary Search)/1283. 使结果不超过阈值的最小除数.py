@@ -47,7 +47,7 @@ class Solution:
         res = float('inf')
         while l <= r:
             mid = l + (r - l) // 2
-            presum = 0
+            presum = sum([(num+mid-1)//mid for num in nums])
             for num in nums:
                 if num % mid == 0:
                     presum += num // mid
