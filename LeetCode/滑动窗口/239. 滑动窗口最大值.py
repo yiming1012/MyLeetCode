@@ -1,4 +1,5 @@
 """
+239. 滑动窗口最大值
 给定一个数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口内的 k 个数字。滑动窗口每次只向右移动一位。
 
 返回滑动窗口中的最大值。
@@ -38,11 +39,32 @@
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 """
 import collections
+import heapq
 from typing import List
 
 
 class Solution:
-    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+    def maxSlidingWindow1(self, nums: List[int], k: int) -> List[int]:
+        """
+        思路：小根堆
+        @param nums:
+        @param k:
+        @return:
+        """
+        heap = []
+        n = len(nums)
+        for i in range(k):
+            heapq.heappush(heap, (-nums[i], i))
+        res = [-heap[0][0]]
+
+        for i in range(k, n):
+            heapq.heappush(heap, (-nums[i], i))
+            while heap and heap[0][1] <= i - k:
+                heapq.heappop(heap)
+            res.append(-heap[0][0])
+        return res
+
+    def maxSlidingWindow2(self, nums: List[int], k: int) -> List[int]:
         """
         思路：单调队列实现滑动窗口
         1. 保证队列单调递减
@@ -52,20 +74,25 @@ class Solution:
         @param k:
         @return:
         """
-        n = len(nums)
-        if n == 0:
-            return []
         queue = collections.deque()
-        res = []
-        for i in range(n):
-            while queue and nums[queue[-1]] < nums[i]:
+        n = len(nums)
+        for i in range(k):
+            while queue and queue[-1][0] <= nums[i]:
                 queue.pop()
-
-            queue.append(i)
-            if queue[0] == i - k:
+            queue.append((nums[i], i))
+        res = [queue[0][0]]
+        for i in range(k, n):
+            while queue and queue[-1][0] <= nums[i]:
+                queue.pop()
+            queue.append((nums[i], i))
+            while queue and queue[0][1] <= i - k:
                 queue.popleft()
-            if i >= k - 1:
-                res.append(nums[queue[0]])
+            res.append(queue[0][0])
         return res
 
 
+if __name__ == '__main__':
+    nums = [1, 3, -1, -3, 5, 3, 6, 7]
+    k = 3
+    print(Solution().maxSlidingWindow1(nums, k))
+    print(Solution().maxSlidingWindow2(nums, k))
