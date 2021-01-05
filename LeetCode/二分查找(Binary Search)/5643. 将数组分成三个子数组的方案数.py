@@ -38,7 +38,12 @@ from typing import List
 
 
 class Solution:
-    def waysToSplit(self, nums: List[int]) -> int:
+    def waysToSplit1(self, nums: List[int]) -> int:
+        """
+        思路：二分
+        @param nums:
+        @return:
+        """
         mod = 10 ** 9 + 7
         n = len(nums)
         pre = [0] * (n + 1)
@@ -52,4 +57,70 @@ class Solution:
             res = (res + max(0, right - left)) % mod
         return res % mod
 
+    def waysToSplit2(self, nums: List[int]) -> int:
+        """
+        思路：二分分别计算
+        1. 分别计算满足条件的左端点和右端点
+        @param nums:
+        @return:
+        """
+        mod = 10 ** 9 + 7
+        n = len(nums)
+        pre = [0] * (n + 1)
+        for i in range(n):
+            pre[i + 1] = pre[i] + nums[i]
 
+        res = 0
+        for i in range(1, n - 1):
+            l, r = i + 1, n - 1
+            while l < r:
+                mid = l + (r - l) // 2
+                if pre[i] <= pre[mid] - pre[i]:
+                    r = mid
+                else:
+                    l = mid + 1
+            if pre[l] - pre[i] < pre[i]:
+                break
+            left = l
+
+            l, r = i + 1, n - 1
+            while l < r:
+                mid = l + (r - l + 1) // 2
+                if pre[-1] - pre[mid] >= pre[mid] - pre[i]:
+                    l = mid
+                else:
+                    r = mid - 1
+            right = l
+            if i < left <= right <= n - 1 and pre[left] - pre[i] >= pre[i] and pre[-1] - pre[right] >= pre[right] - \
+                    pre[i]:
+                res = (res + right - left + 1) % mod
+
+        return res % mod
+
+    def waysToSplit3(self, nums: List[int]) -> int:
+        """
+        思路：三指针
+        @param nums:
+        @return:
+        """
+        sums, n = [0], len(nums)
+        for num in nums: sums.append(sums[-1] + num)
+        l, r = 2, 2
+        ans = 0
+        for i in range(1, n):
+            l, r = max(i + 1, l), max(i + 1, r)
+
+            while l <= n - 1 and sums[l] - sums[i] < sums[i]: l += 1
+            while r <= n - 1 and sums[n] - sums[r] >= sums[r] - sums[i]: r += 1
+
+            print(l, r)
+            if r >= l:
+                ans += r - l
+        return ans % (10 ** 9 + 7)
+
+
+if __name__ == '__main__':
+    nums = [1, 2, 2, 2, 5, 0]
+    print(Solution().waysToSplit1(nums))
+    print(Solution().waysToSplit2(nums))
+    print(Solution().waysToSplit3(nums))
