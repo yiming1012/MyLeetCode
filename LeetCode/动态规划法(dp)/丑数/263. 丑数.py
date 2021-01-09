@@ -27,17 +27,19 @@
 链接：https://leetcode-cn.com/problems/ugly-number
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 """
+
+
 class Solution:
     def isUgly(self, num: int) -> bool:
-        while num!=1:
-            tmp=num
-            if tmp%2==0:
-                num=tmp//2
-            elif tmp%3==0:
-                num=tmp//3
-            elif tmp%5==0:
-                num=tmp//5
+        while num != 1:
+            tmp = num
+            if tmp % 2 == 0:
+                num = tmp // 2
+            elif tmp % 3 == 0:
+                num = tmp // 3
+            elif tmp % 5 == 0:
+                num = tmp // 5
 
-            if tmp==num:
+            if tmp == num:
                 return False
         return True
