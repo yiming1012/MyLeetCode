@@ -34,6 +34,7 @@ v   v
 链接：https://leetcode-cn.com/problems/redundant-connection-ii
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 """
+from typing import List
 
 
 class UnionFind(object):
@@ -57,7 +58,7 @@ class UnionFind(object):
 
 
 class Solution(object):
-    def findRedundantDirectedConnection(self, edges):
+    def findRedundantDirectedConnection1(self, edges):
         """
         思路：并查集
         1. 判断是否存在入度为2和环
@@ -78,18 +79,49 @@ class Solution(object):
             if ed in parent:
                 candidates.append([parent[ed], ed])
                 candidates.append([st, ed])
+                # print(candidates)
             else:
                 parent[ed] = st
                 if uf.union(st, ed):
                     last = [st, ed]
-                    print(last)
+                    # print(last)
 
         if not candidates:
             return last
-        print(candidates)
+        # print(candidates)
         return candidates[0] if last else candidates[1]
+
+    def findRedundantDirectedConnection2(self, edges: List[List[int]]) -> List[int]:
+        n = len(edges) + 1
+        parent = {i: i for i in range(n + 1)}
+
+        def find(x):
+            if x != parent[x]:
+                parent[x] = find(parent[x])
+            return parent[x]
+
+        root = {}
+        ind = []
+        ring = None
+        for u, v in edges:
+            if v in root:
+                ind.append([root[v], v])
+                ind.append([u, v])
+            else:
+                root[v] = u
+                a, b = find(u), find(v)
+                if a != b:
+                    parent[b] = a
+                else:
+                    ring = [u, v]
+        # 如果没有入度为2的，去掉构成环的边
+        if not ind:
+            return ring
+        # 如果还有环，说明需要删掉前面的一条，因为后面的一条边没加到ind中
+        return ind[0] if ring else ind[1]
 
 
 if __name__ == '__main__':
-    edges = [[1, 2], [1, 3], [2, 3]]
-    print(Solution().findRedundantDirectedConnection(edges))
+    edges = [[1, 2], [2, 3], [3, 1], [4, 1]]
+    # edges = [[1, 2], [2, 3], [4, 1], [5, 4], [4, 3]]
+    print(Solution().findRedundantDirectedConnection1(edges))
