@@ -53,7 +53,8 @@ class Solution:
         @return:
         """
         n = len(sticks)
-        if n == 1: return 0
+        if n == 1:
+            return 0
         heapq.heapify(sticks)
         res = 0
         while len(sticks) > 1:
