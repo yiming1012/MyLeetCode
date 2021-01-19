@@ -69,30 +69,34 @@ class Solution:
     def accountsMerge2(self, accounts: List[List[str]]) -> List[List[str]]:
         """
         思路：并查集
-        1. 以每个邮箱为单位求
+        1. 以每个邮箱为单位求根节点
+        2. 根据根节点合并每个集合的邮箱地址，通过set的|操作，哈希表的key/value分别记录根节点和邮箱地址
+        3. 对每个根节点合并其排序后的邮箱集合
         """
-        H = {}
-        I = list(range(len(accounts)))
+        n = len(accounts)
+        parent = list(range(len(accounts)))
+        dic = {}
 
-        def root(i):
-            if I[i] != i:
-                I[i] = root(I[i])
-            return I[i]
+        def find(x):
+            if x != parent[x]:
+                parent[x] = find(parent[x])
+            return parent[x]
 
-        for i, a in enumerate(accounts):
-            for e in a[1:]:
-                if e in H:
-                    I[root(I[i])] = root(H[e])
+        for i, v in enumerate(accounts):
+            for e in v[1:]:
+                if e in dic:
+                    parent[find(i)] = find(dic[e])
                 else:
-                    H[e] = root(i)
+                    dic[e] = i
 
-        ret = collections.defaultdict(set)
-        for i in range(len(accounts)):
-            ret[root(i)] |= set(accounts[i][1:])
-        return [(accounts[k][0:1] + sorted(v)) for k, v in ret.items()]
+        res = collections.defaultdict(set)
+        for i in range(n):
+            res[find(i)] |= set(accounts[i][1:])
+        return [[accounts[k][0]] + sorted(list(v)) for k, v in res.items()]
 
 
 if __name__ == '__main__':
-    accounts = [["John", "johnsmith@mail.com", "john00@mail.com"], ["John", "johnnybravo@mail.com"], ["John", "johnsmith@mail.com", "john_newyork@mail.com"], ["Mary", "mary@mail.com"]]
+    accounts = [["John", "johnsmith@mail.com", "john00@mail.com"], ["John", "johnnybravo@mail.com"],
+                ["John", "johnsmith@mail.com", "john_newyork@mail.com"], ["Mary", "mary@mail.com"]]
     print(Solution().accountsMerge(accounts))
     print(Solution().accountsMerge2(accounts))

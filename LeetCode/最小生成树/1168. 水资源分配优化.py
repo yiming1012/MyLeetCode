@@ -30,33 +30,32 @@
 from typing import List
 
 
+class UnionFind:
+    def __init__(self, n):
+        self.parent = [i for i in range(n + 1)]
+
+    def union(self, n1, n2):
+        p1, p2 = self.find(n1), self.find(n2)
+        self.parent[p1] = p2
+
+    def find(self, i):
+        if self.parent[i] != i:
+            self.parent[i] = self.find(self.parent[i])
+        return self.parent[i]
+
+
 class Solution:
     def minCostToSupplyWater(self, n: int, wells: List[int], pipes: List[List[int]]) -> int:
-        for i, v in enumerate(wells):
-            pipes.append([0, i + 1, v])
-
-        parent = [i for i in range(n)]
+        for i in range(n):
+            pipes.append([0, i + 1, wells[i]])
         pipes.sort(key=lambda x: x[2])
-        print(pipes)
-        edge = 0
-        res = 0
-
-        def find(x):
-            if x != parent[x]:
-                parent[x] = find(parent[x])
-            return parent[x]
-
-        for u, v, w in pipes:
-            x = find(u - 1)
-            y = find(v - 1)
-            if x != y:
-                edge += 1
-                parent[y] = x
-                res += w
-            if edge == n - 1:
-                return res
-
-        return res
+        uf = UnionFind(n)
+        toltalCost = 0
+        for i, j, cost in pipes:
+            if uf.find(i) != uf.find(j):
+                toltalCost += cost
+                uf.union(i, j)
+        return toltalCost
 
 
 if __name__ == '__main__':
