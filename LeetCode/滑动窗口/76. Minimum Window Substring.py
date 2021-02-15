@@ -18,7 +18,7 @@ import collections
 
 
 class Solution:
-    def minWindow(self, s: str, t: str) -> str:
+    def minWindow1(self, s: str, t: str) -> str:
         """
         执行用时 :720 ms, 在所有 Python3 提交中击败了11.95%的用户
         内存消耗 :13.9 MB, 在所有 Python3 提交中击败了7.69%的用户
@@ -44,6 +44,28 @@ class Solution:
                 left += 1
             right += 1
         return s[start:end + 1] if start != -1 else ""
+
+    def minWindow2(self, s: str, t: str) -> str:
+        cnt = collections.Counter(t)
+        need = len(t)
+        left = 0
+        min_ = float('inf')
+        start = -1
+        # 这里cnt不需要考虑其他不在t中的字符，因为先减后加，不需要考虑c不在t中且cnt[c]>0
+        for i, c in enumerate(s):
+            if cnt[c] > 0:
+                need -= 1
+            cnt[c] -= 1
+            while need == 0:
+                if min_ > i - left + 1:
+                    min_ = i - left + 1
+                    start = left
+                w = s[left]
+                if cnt[w] == 0:
+                    need += 1
+                cnt[w] += 1
+                left += 1
+        return s[start:start + min_] if min_ != float('inf') else ""
 
 
 if __name__ == '__main__':
