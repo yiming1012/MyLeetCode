@@ -30,7 +30,6 @@ class Solution:
         """
         n = len(s)
         dp = [[0] * n for _ in range(n)]
-        print(dp)
         for i in range(n):
             dp[i][i] = 1
         for j in range(n):
@@ -42,7 +41,6 @@ class Solution:
                         dp[i][j] = 1
                     else:
                         dp[i][j] = dp[i + 1][j - 1]
-        print(dp)
         length = 0
         start = 0
         for i in range(n):
@@ -51,6 +49,40 @@ class Solution:
                     length = j - i + 1
                     start = i
         return s[start:start + length]
+
+    def longestPalindrome3(self, s: str) -> str:
+        """
+        Manacher（马拉车）算法
+        @param s:
+        @return:
+        """
+        def getLength(i, j):
+            while i - 1 >= 0 and j + 1 < n and S[i - 1] == S[j + 1]:
+                i -= 1
+                j += 1
+            return (j - i + 2) // 2
+
+        S = "#" + "#".join(list(s)) + "#"
+        start, end = -1, -1
+        center, right = 0, 0
+        n = len(S)
+        dp = [0] * n
+        for i in range(n):
+            if right > i:
+                j = 2 * center - i
+                arm = min(dp[j], right - i + 1)
+                max_arm = getLength(i - arm + 1, i + arm - 1)
+            else:
+                max_arm = getLength(i, i)
+
+            dp[i] = max_arm
+            if i + max_arm - 1 > right:
+                right = i + max_arm - 1
+                center = i
+
+                if 2 * max_arm - 1 > end - start + 1:
+                    start, end = i - max_arm + 1, i + max_arm - 1
+        return S[start + 1:end:2]
 
 
 '''
@@ -61,6 +93,7 @@ class Solution:
 
 if __name__ == '__main__':
     s = "aabbaa"
-    s2 = "abac"
+    s2 = "aacabdkacaa"
     print(Solution().longestPalindrome1(s))
     print(Solution().longestPalindrome2(s2))
+    print(Solution().longestPalindrome3(s2))
