@@ -33,6 +33,8 @@ edges[i][0] != edges[i][1]
 0 <= edges[i][j] <= edges.length
 edges 会形成一棵无向树
 """
+import collections
+from typing import List
 
 
 class Solution:
@@ -46,16 +48,21 @@ class Solution:
 
         def dfs(root):
             nonlocal res
-            pre = cur = 0
+            pre = 0
             visited.add(root)
             for nex in graph[root]:
                 if nex not in visited:
-                    cur = 1 + dfs(nex)
-
+                    cur = dfs(nex)
                     res = max(res, cur + pre)
+                    print(root, res)
                     if cur > pre:
                         pre = cur
-            return pre
+            return pre + 1
 
         dfs(0)
         return res
+
+
+if __name__ == '__main__':
+    edges = [[0, 1], [1, 2], [2, 3], [1, 4], [4, 5]]
+    print(Solution().treeDiameter(edges))
