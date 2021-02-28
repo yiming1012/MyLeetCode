@@ -1,5 +1,7 @@
 """
-小扣注意到秋日市集上有一个创作黑白方格画的摊位。摊主给每个顾客提供一个固定在墙上的白色画板，画板不能转动。画板上有 n * n 的网格。绘画规则为，小扣可以选择任意多行以及任意多列的格子涂成黑色，所选行数、列数均可为 0。
+LCP 22. 黑白方格圆
+小扣注意到秋日市集上有一个创作黑白方格画的摊位。摊主给每个顾客提供一个固定在墙上的白色画板，画板不能转动。画板上有 n * n 的网格。
+绘画规则为，小扣可以选择任意多行以及任意多列的格子涂成黑色，所选行数、列数均可为 0。
 
 小扣希望最终的成品上需要有 k 个黑色格子，请返回小扣共有多少种涂色方案。
 
@@ -57,21 +59,20 @@ class Solution:
         @param k:
         @return:
         """
-        p = [1] * (n + 1)
-        for i in range(1, n + 1):
-            p[i] = p[i - 1] * i
 
-        def C(n, i):
-            return p[n] // p[i] // p[n - i]
+        C = [[1] * (n + 1) for _ in range(n + 1)]
+        for i in range(1, n):
+            for j in range(i):
+                C[i + 1][j + 1] = C[i][j] + C[i][j + 1]
 
-        s = 0
+        res = 0
         if k == n * n:
             return 1
         for i in range(n + 1):
             for j in range(n + 1):
                 if i * n + j * n - i * j == k:
-                    s += C(n, i) * C(n, j)
-        return s
+                    res += C[n][i] * C[n][j]
+        return res
 
 
 if __name__ == '__main__':
