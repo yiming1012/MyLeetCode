@@ -1,4 +1,7 @@
-a = b = 26
-while b:
-    print(b)
-    b = (b - 1) & a
+sub = t = 6
+while sub:
+    print(sub)
+    sub = (sub - 1) & t
+import re
+
+re.search()

@@ -76,6 +76,7 @@ class Solution:
 
             tmp = pos[nums[u]]
             pos[nums[u]] = len(stk)
+            print(u, nums[u], dep, pos[nums[u]], pos)
             stk.append(u)
 
             for v in edges[u]:
@@ -90,6 +91,6 @@ class Solution:
 
 
 if __name__ == '__main__':
-    nums = [2, 3, 3, 2]
-    edges = [[0, 1], [1, 2], [1, 3]]
+    nums = [5, 6, 10, 2, 3, 6, 15]
+    edges = [[0, 1], [0, 2], [1, 3], [1, 4], [2, 5], [2, 6]]
     print(Solution().getCoprimes(nums, edges))
