@@ -60,14 +60,3 @@ class Solution:
 if __name__ == '__main__':
     A = [1, 2, 3]
     print(Solution().minScoreTriangulation(A))
-    a = ['a']
-    print(id(a))
-    a += 'd'
-    print(id(a))
-
-
-    b=123
-    print(id(b))
-    # b+=1
-    b=b+1
-    print(id(b))
