@@ -1,4 +1,5 @@
 """
+746. 使用最小花费爬楼梯
 On a staircase, the i-th step has some non-negative cost cost[i] assigned (0 indexed).
 
 Once you pay the cost, you can either climb one or two steps. You need to find minimum cost to reach the top of the floor, and you can either start from the step with index 0, or the step with index 1.
@@ -23,7 +24,7 @@ from typing import List
 
 
 class Solution:
-    def minCostClimbingStairs(self, cost: List[int]) -> int:
+    def minCostClimbingStairs1(self, cost: List[int]) -> int:
         """
         思路：动态规划法
         1. 状态转移方程：dp[i] = min(dp[i - 2] + cost[i - 2], dp[i - 1] + cost[i - 1])
@@ -43,8 +44,27 @@ class Solution:
             pre, cur = cur, min(pre, cur) + cost[i]
         return min(pre, cur)
 
+    def minCostClimbingStairs3(self, cost: List[int]) -> int:
+        n = len(cost)
+        dp = [0] * (n + 1)
+        path = [-1] * (n + 1)
+        for i in range(2, n + 1):
+            if dp[i - 1] + cost[i - 1] < dp[i - 2] + cost[i - 2]:
+                path[i] = i - 1
+                dp[i] = dp[i - 1] + cost[i - 1]
+            else:
+                path[i] = i - 2
+                dp[i] = dp[i - 2] + cost[i - 2]
+        # print(path)
+        i = n
+        while path[i] != -1:
+            print(path[i])
+            i = path[i]
+        return dp[-1]
+
 
 if __name__ == '__main__':
     cost = [10, 15, 20]
-    print(Solution().minCostClimbingStairs(cost))
+    print(Solution().minCostClimbingStairs1(cost))
     print(Solution().minCostClimbingStairs2(cost))
+    print(Solution().minCostClimbingStairs3(cost))
