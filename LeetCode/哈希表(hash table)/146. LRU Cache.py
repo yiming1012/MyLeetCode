@@ -27,34 +27,11 @@ cache.get(4);       // returns 4
 链接：https://leetcode-cn.com/problems/lru-cache
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 '''
-# class LRUCache:
-
-#     def __init__(self, capacity: int):
-#         self.dic = collections.defaultdict(lambda: 0)
-#         self.capacity = capacity
-
-#     def get(self, key: int) -> int:
-#         if key in self.dic:
-#             self.dic[key] = self.dic.pop(key)
-#             return self.dic[key]
-#         else:
-#             return -1
-
-#     def put(self, key: int, value: int) -> None:
-#         if self.capacity == 0:
-#             return -1
-#         if len(self.dic) == self.capacity:
-#             if key in self.dic:
-#                 self.dic.pop(key)
-#             else:
-#                 self.dic.pop(list(self.dic.keys())[0])
-
-#         self.dic[key] = value
 
 from collections import OrderedDict
 
 
-class LRUCache:
+class LRUCacheDict:
 
     def __init__(self, capacity: int):
         self.maxsize = capacity
@@ -78,7 +55,84 @@ class LRUCache:
         # 在字典尾部添加
         self.lrucache[key] = value
 
+
 # Your LRUCache object will be instantiated and called as such:
-# obj = LRUCache(capacity)
-# param_1 = obj.get(key)
-# obj.put(key,value)
+
+
+class DListNode:
+    def __init__(self, key=0, value=0):
+        self.key = key
+        self.value = value
+        self.prev = None
+        self.next = None
+
+
+class LRUCache:
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.dic = {}
+        self.size = 0
+        self.head = DListNode()
+        self.tail = DListNode()
+        self.head.next = self.tail
+        self.tail.prev = self.head
+
+    def get(self, key: int) -> int:
+        if key not in self.dic:
+            return -1
+        else:
+            node = self.dic[key]
+            self.moveToHead(node)
+            return node.value
+
+    def put(self, key: int, value: int) -> None:
+        if key not in self.dic:
+            node = DListNode(key, value)
+            self.dic[key] = node
+            self.addToHead(node)
+            self.size += 1
+            if self.size > self.capacity:
+                node = self.removeTail()
+                self.size -= 1
+                del self.dic[node.key]
+        else:
+            node = self.dic[key]
+            node.value = value
+            self.moveToHead(node)
+
+    def removeNode(self, node):
+        node.prev.next = node.next
+        node.next.prev = node.prev
+
+    def moveToHead(self, node):
+        self.removeNode(node)
+        self.addToHead(node)
+
+    def addToHead(self, node):
+        node.next = self.head.next
+        self.head.next.prev = node
+        self.head.next = node
+        node.prev = self.head
+
+    def removeTail(self):
+        node = self.tail.prev
+        node.prev.next = self.tail
+        node.next.prev = node.prev
+        return node
+
+
+if __name__ == '__main__':
+    capacity = 3
+    obj = LRUCache(capacity)
+    obj.put(1, 2)
+    obj.put(3, 4)
+    param_1 = obj.get(3)
+    print(param_1)
+    obj.put(5, 6)
+    obj.put(7, 8)
+    param_1 = obj.get(3)
+    print(param_1)
+    param_1 = obj.get(7)
+    print(param_1)
+    param_1 = obj.get(1)
+    print(param_1)
