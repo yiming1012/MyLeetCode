@@ -1,4 +1,5 @@
 '''
+42. 接雨水
 Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap after raining.
 
 
@@ -18,80 +19,25 @@ from typing import List
 
 
 class Solution:
-    def trap(self, height: List[int]) -> int:
-        '''
-        执行用时 :64 ms, 在所有 Python3 提交中击败了40.17%的用户
-        内存消耗 :14 MB, 在所有 Python3 提交中击败了5.04%的用户
-        思路：利用栈存储已经经过的点，用遇到更大的就计算
-        1、后一个数比前一个数大才计算，比前一个数小继续入栈
-        2、维护一个单调递减的stack
-        :param height:
-        :return:
-        '''
-
-        def fun(height, res):
-            if len(height) <= 1:
-                return res
-            stack = []
-            index = 0
-            stack.append(height[0])
-            for i in range(1, len(height)):
-                if height[i] >= height[index]:
-                    square = (i - index) * height[index]
-                    res += square
-                    while len(stack) > 0:
-                        res -= stack.pop()
-                    index = i
-                stack.append(height[i])
-
-            if len(stack) > 0:
-                stack.reverse()
-                res = fun(stack, res)
-            return res
-
-        return fun(height, 0)
-
-    def trap2(self, height: List[int]) -> int:
-        stack = []  # (height, index)
-        n = len(height)
-        res = 0
-        for i in range(n):
-            while stack and height[i] >= stack[-1][0]:
-                cur = stack.pop()
-                if not stack: break
-                currentHeight = min(height[i], stack[-1][0]) - cur[0]
-                res += currentHeight * (i - stack[-1][1] - 1)
-            stack.append((height[i], i))
-        return res
-
-    def trap3(self, height: List[int]) -> int:
-        '''
-        执行用时 :60 ms, 在所有 Python3 提交中击败了49.49%的用户
-        内存消耗 :14.2 MB, 在所有 Python3 提交中击败了5.04%的用户
-        思路：单调栈(Monotone Stack)
-        :param height:
-        :return:
-        '''
+    def trap1(self, height: List[int]) -> int:
+        """
+        思路：单调栈
+        @param height:
+        @return:
+        """
         stack = []
-        n = len(height)
         res = 0
-        for i in range(n):
-            while stack and height[i] >= height[stack[-1]]:
-                index = stack.pop()
-                if not stack:
-                    break
-                minheight = min(height[i], height[stack[-1]]) - height[index]
-                res += minheight * (i - stack[-1] - 1)
+        for i, h in enumerate(height):
+            while stack and height[stack[-1]] < h:
+                buttom = stack.pop()
+                if not stack: break
+                left = stack[-1]
+                res += (i - left - 1) * (min(h, height[left]) - height[buttom])
             stack.append(i)
         return res
 
-    def trap4(self, height: List[int]) -> int:
-        return sum(map(min, accumulate(height, max), list(accumulate(height[::-1], max))[::-1])) - sum(height)
-
-    def trap5(self, height: List[int]) -> int:
+    def trap2(self, height: List[int]) -> int:
         '''
-        执行用时 :72 ms, 在所有 Python3 提交中击败了28.11%的用户
-        内存消耗 :14 MB, 在所有 Python3 提交中击败了5.04%的用户
         思路：动态规划法
         :param height:
         :return:
@@ -140,10 +86,8 @@ class Solution:
     对于位置left而言，它左边最大值一定是left_max，右边最大值“大于等于”right_max，这时候，如果left_max<right_max成立，那么它就知道自己能存多少水了。无论右边将来会不会出现更大的right_max，都不影响这个结果。 所以当left_max<right_max时，我们就希望去处理left下标，反之，我们希望去处理right下标。
     """
 
-    def trap6(self, height: List[int]) -> int:
+    def trap3(self, height: List[int]) -> int:
         '''
-        执行用时 :60 ms, 在所有 Python3 提交中击败了49.49%的用户
-        内存消耗 :13.9 MB, 在所有 Python3 提交中击败了5.04%的用户
         思路：双指针
         :param height:
         :return:
@@ -167,4 +111,6 @@ class Solution:
 if __name__ == '__main__':
     height = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]
     s = Solution()
-    print(s.trap6(height))
+    print(s.trap1(height))
+    print(s.trap2(height))
+    print(s.trap3(height))
