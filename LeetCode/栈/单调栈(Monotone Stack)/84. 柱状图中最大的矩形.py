@@ -1,4 +1,5 @@
 """
+84. 柱状图中最大的矩形
 给定 n 个非负整数，用来表示柱状图中各个柱子的高度。每个柱子彼此相邻，且宽度为 1 。
 
 求在该柱状图中，能够勾勒出来的矩形的最大面积。
@@ -30,7 +31,7 @@ from typing import List
 
 
 class Solution:
-    def largestRectangleArea(self, heights: List[int]) -> int:
+    def largestRectangleArea1(self, heights: List[int]) -> int:
         """
         思路：单调栈(Monotone Stack)
         时间复杂度：O(N)，输入数组里的每一个元素入栈一次，出栈一次。
@@ -59,7 +60,25 @@ class Solution:
             stack.append(i)
         return res
 
+    def largestRectangleArea2(self, heights: List[int]) -> int:
+        n = len(heights)
+        left = [-1] * n
+        right = [n] * n
+        stack = []
+        for i in range(n):
+            while stack and heights[stack[-1]] > heights[i]:
+                index = stack.pop()
+                right[index] = i
+            left[i] = stack[-1] if stack else -1
+            stack.append(i)
+
+        res = 0
+        for i in range(n):
+            res = max(res, heights[i] * (right[i] - left[i] - 1))
+        return res
+
 
 if __name__ == '__main__':
     heights = [2, 1, 5, 6, 2, 3]
-    print(Solution().largestRectangleArea(heights))
+    print(Solution().largestRectangleArea1(heights))
+    print(Solution().largestRectangleArea2(heights))

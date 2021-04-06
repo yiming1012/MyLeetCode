@@ -34,6 +34,7 @@ class Solution:
         :param lists:
         :return:
         '''
+
         def merge(node1, node2):
             dummy = node = ListNode(0)
             while node1 and node2:
