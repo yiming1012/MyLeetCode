@@ -10,7 +10,7 @@ GitHub: https://github.com/apachecn/AiLearning
 """
 from collections import Counter
 
-# print(__doc__)
+print(__doc__)
 from numpy import *
 
 
@@ -22,7 +22,6 @@ def loadDataSet():
 # 创建集合 C1。即对 dataSet 进行去重，排序，放入 list 中，然后转换所有的元素为 frozenset
 def createC1(dataSet):
     """createC1（创建集合 C1）
-
     Args:
         dataSet 原始数据集
     Returns:
@@ -56,8 +55,7 @@ def scanD(dataSet, Ck, minSupport):
         retList 支持度大于 minSupport 的集合
         supportData 候选项集支持度数据
     """
-
-    # ssCnt 临时存放选数据集 Ck 的频率. 例如: a->10, b->5, c->8    
+    # ssCnt 临时存放选数据集 Ck 的频率. 例如: a->10, b->5, c->8
     ssCnt = Counter()
     for tid in dataSet:
         for can in Ck:
@@ -80,7 +78,8 @@ def scanD(dataSet, Ck, minSupport):
 
 # 输入频繁项集列表 Lk 与返回的元素个数 k，然后输出所有可能的候选项集 Ck
 def aprioriGen(Lk, k):
-    """aprioriGen（输入频繁项集列表 Lk 与返回的元素个数 k，然后输出候选项集 Ck。
+    """
+    aprioriGen（输入频繁项集列表 Lk 与返回的元素个数 k，然后输出候选项集 Ck。
        例如: 以 {0},{1},{2} 为输入且 k = 2 则输出 {0,1}, {0,2}, {1,2}. 以 {0,1},{0,2},{1,2} 为输入且 k = 3 则输出 {0,1,2}
        仅需要计算一次，不需要将所有的结果计算出来，然后进行去重操作
        这是一个更高效的算法）
@@ -112,7 +111,8 @@ def aprioriGen(Lk, k):
 
 # 找出数据集 dataSet 中支持度 >= 最小支持度的候选项集以及它们的支持度。即我们的频繁项集。
 def apriori(dataSet, minSupport=0.5):
-    """apriori（首先构建集合 C1，然后扫描数据集来判断这些只有一个元素的项集是否满足最小支持度的要求。那么满足最小支持度要求的项集构成集合 L1。然后 L1 中的元素相互组合成 C2，C2 再进一步过滤变成 L2，然后以此类推，知道 CN 的长度为 0 时结束，即可找出所有频繁项集的支持度。）
+    """
+    apriori（首先构建集合 C1，然后扫描数据集来判断这些只有一个元素的项集是否满足最小支持度的要求。那么满足最小支持度要求的项集构成集合 L1。然后 L1 中的元素相互组合成 C2，C2 再进一步过滤变成 L2，然后以此类推，知道 CN 的长度为 0 时结束，即可找出所有频繁项集的支持度。）
 
     Args:
         dataSet 原始数据集
@@ -154,7 +154,7 @@ def apriori(dataSet, minSupport=0.5):
         supportData.update(supK)
         if len(Lk) == 0:
             break
-        # Lk 表示满足频繁子项的集合，L 元素在增加，例如: 
+        # Lk 表示满足频繁子项的集合，L 元素在增加，例如:
         # l=[[set(1), set(2), set(3)]]
         # l=[[set(1), set(2), set(3)], [set(1, 2), set(2, 3)]]
         L.append(Lk)
@@ -167,9 +167,8 @@ def apriori(dataSet, minSupport=0.5):
 def calcConf(freqSet, H, supportData, brl, minConf=0.7):
     """
     calcConf（对两个元素的频繁项，计算可信度，例如： {1,2}/{1} 或者 {1,2}/{2} 看是否满足条件）
-
     Args:
-        freqSet 频繁项集中的元素，例如: frozenset([1, 3])    
+        freqSet 频繁项集中的元素，例如: frozenset([1, 3])
         H 频繁项集中的元素的集合，例如: [frozenset([1]), frozenset([3])]
         supportData 所有元素的支持度的字典
         brl 关联规则列表的空数组
@@ -202,17 +201,20 @@ def calcConf(freqSet, H, supportData, brl, minConf=0.7):
 def rulesFromConseq(freqSet, H, supportData, brl, minConf=0.7):
     """rulesFromConseq
     Args:
-        freqSet 频繁项集中的元素，例如: frozenset([2, 3, 5])    
+        freqSet 频繁项集中的元素，例如: frozenset([2, 3, 5])
         H 频繁项集中的元素的集合，例如: [frozenset([2]), frozenset([3]), frozenset([5])]
         supportData 所有元素的支持度的字典
         brl 关联规则列表的数组
         minConf 最小可信度
     """
-    # H[0] 是 freqSet 的元素组合的第一个元素，并且 H 中所有元素的长度都一样，长度由 aprioriGen(H, m+1) 这里的 m + 1 来控制
-    # 该函数递归时，H[0] 的长度从 1 开始增长 1 2 3 ...
-    # 假设 freqSet = frozenset([2, 3, 5]), H = [frozenset([2]), frozenset([3]), frozenset([5])]
-    # 那么 m = len(H[0]) 的递归的值依次为 1 2
-    # 在 m = 2 时, 跳出该递归。假设再递归一次，那么 H[0] = frozenset([2, 3, 5])，freqSet = frozenset([2, 3, 5]) ，没必要再计算 freqSet 与 H[0] 的关联规则了。
+    """
+    H[0] 是 freqSet 的元素组合的第一个元素，并且 H 中所有元素的长度都一样，长度由 aprioriGen(H, m+1) 这里的 m + 1 来控制
+    该函数递归时，H[0] 的长度从 1 开始增长 1 2 3 ...
+    假设 freqSet = frozenset([2, 3, 5]), H = [frozenset([2]), frozenset([3]), frozenset([5])]
+    那么 m = len(H[0]) 的递归的值依次为 1 2
+    在 m = 2 时, 跳出该递归。假设再递归一次，那么 H[0] = frozenset([2, 3, 5])，freqSet = frozenset([2, 3, 5]) ，没必要再计算 freqSet 与 H[0] 的关联规则了。
+    
+    """
     m = len(H[0])
     if len(freqSet) > m + 1:
         # print 'freqSet******************', len(freqSet), m + 1, freqSet, H, H[0]
@@ -233,7 +235,8 @@ def rulesFromConseq(freqSet, H, supportData, brl, minConf=0.7):
 
 # 生成关联规则
 def generateRules(L, supportData, minConf=0.7):
-    """generateRules
+    """
+    generateRules
 
     Args:
         L 频繁项集列表
@@ -247,7 +250,7 @@ def generateRules(L, supportData, minConf=0.7):
     # 假设 L = [[frozenset([1]), frozenset([3]), frozenset([2]), frozenset([5])], 
     [frozenset([1, 3]), frozenset([2, 5]),frozenset([2, 3]), frozenset([3, 5])], 
     [frozenset([2, 3, 5])]]
-    
+
     """
     for i in range(1, len(L)):
         # 获取频繁项集中每个组合的所有元素
@@ -261,59 +264,6 @@ def generateRules(L, supportData, minConf=0.7):
             else:
                 calcConf(freqSet, H1, supportData, bigRuleList, minConf)
     return bigRuleList
-
-
-# def getActionIds():
-#     from time import sleep
-#     from votesmart import votesmart
-#     votesmart.apikey = 'get your api key first'
-#     votesmart.apikey = 'a7fa40adec6f4a77178799fae4441030'
-#     actionIdList = []
-#     billTitleList = []
-#     fr = open('data/11.Apriori/recent20bills.txt')
-#     for line in fr.readlines():
-#         billNum = int(line.split('\t')[0])
-#         try:
-#             billDetail = votesmart.votes.getBill(billNum)  # api call
-#             for action in billDetail.actions:
-#                 if action.level == 'House' and (action.stage == 'Passage' or action.stage == 'Amendment Vote'):
-#                     actionId = int(action.actionId)
-#                     print('bill: %d has actionId: %d' % (billNum, actionId))
-#                     actionIdList.append(actionId)
-#                     billTitleList.append(line.strip().split('\t')[1])
-#         except:
-#             print("problem getting bill %d" % billNum)
-#         sleep(1)  # delay to be polite
-#     return actionIdList, billTitleList
-#
-#
-# def getTransList(actionIdList, billTitleList):  # this will return a list of lists containing ints
-#     itemMeaning = ['Republican', 'Democratic']  # list of what each item stands for
-#     for billTitle in billTitleList:  # fill up itemMeaning list
-#         itemMeaning.append('%s -- Nay' % billTitle)
-#         itemMeaning.append('%s -- Yea' % billTitle)
-#     transDict = {}  # list of items in each transaction (politician)
-#     voteCount = 2
-#     for actionId in actionIdList:
-#         sleep(3)
-#         print('getting votes for actionId: %d' % actionId)
-#         try:
-#             voteList = votesmart.votes.getBillActionVotes(actionId)
-#             for vote in voteList:
-#                 if not transDict.has_key(vote.candidateName):
-#                     transDict[vote.candidateName] = []
-#                     if vote.officeParties == 'Democratic':
-#                         transDict[vote.candidateName].append(1)
-#                     elif vote.officeParties == 'Republican':
-#                         transDict[vote.candidateName].append(0)
-#                 if vote.action == 'Nay':
-#                     transDict[vote.candidateName].append(voteCount)
-#                 elif vote.action == 'Yea':
-#                     transDict[vote.candidateName].append(voteCount + 1)
-#         except:
-#             print("problem getting actionId: %d" % actionId)
-#         voteCount += 2
-#     return transDict, itemMeaning
 
 
 def testApriori():
@@ -355,34 +305,6 @@ def main():
 
     # 生成关联规则
     testGenerateRules()
-
-    ##项目案例
-    # # 构建美国国会投票记录的事务数据集
-    # actionIdList, billTitleList = getActionIds()
-    # # 测试前2个
-    # transDict, itemMeaning = getTransList(actionIdList[: 2], billTitleList[: 2])
-    # transDict 表示 action_id的集合，transDict[key]这个就是action_id对应的选项，例如 [1, 2, 3]
-    # transDict, itemMeaning = getTransList(actionIdList, billTitleList)
-    # # 得到全集的数据
-    # dataSet = [transDict[key] for key in transDict.keys()]
-    # L, supportData = apriori(dataSet, minSupport=0.3)
-    # rules = generateRules(L, supportData, minConf=0.95)
-    # print (rules)
-
-    # # 项目案例
-    # # 发现毒蘑菇的相似特性
-    # # 得到全集的数据
-    #  dataSet = [line.split() for line in open("data/11.Apriori/mushroom.dat").readlines()]
-    #  L, supportData = apriori(dataSet, minSupport=0.3)
-    # # # 2表示毒蘑菇，1表示可食用的蘑菇
-    # # # 找出关于2的频繁子项出来，就知道如果是毒蘑菇，那么出现频繁的也可能是毒蘑菇
-    #  for item in L[1]:
-    #      if item.intersection('2'):
-    #          print (item)
-    #
-    #  for item in L[2]:
-    #      if item.intersection('2'):
-    #          print (item)
 
 
 if __name__ == "__main__":
