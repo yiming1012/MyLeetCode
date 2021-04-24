@@ -30,17 +30,35 @@ root = [10,5,-3,3,2,null,11,3,-2,null,1], sum = 8
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 """
 # Definition for a binary tree node.
+from collections import Counter
+
+
 class TreeNode:
-    def __init__(self, x):
-        self.val = x
-        self.left = None
-        self.right = None
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
 
 class Solution:
-    def pathSum(self, root: TreeNode, sum: int) -> int:
-        def dfs(root, sumlist):
-            if root is None: return 0
-            sumlist = [num + root.val for num in sumlist] + [root.val]
-            return sumlist.count(sum) + dfs(root.left, sumlist) + dfs(root.right, sumlist)
-        return dfs(root, [])
+    def pathSum(self, root: TreeNode, targetSum: int) -> int:
+        cnt = Counter()
+        cnt[0] = 1
 
+        def dfs(root):
+            nonlocal presum, res
+            if not root: return
+            presum += root.val
+            if presum - targetSum in cnt:
+                res += cnt[presum - targetSum]
+            cnt[presum] += 1
+            print(presum)
+            dfs(root.left)
+            dfs(root.right)
+            cnt[presum] -= 1
+            presum -= root.val
+
+        presum = 0
+        res = 0
+        dfs(root)
+        return res
