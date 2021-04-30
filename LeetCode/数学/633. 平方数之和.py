@@ -75,7 +75,7 @@ class Solution:
                 l += 1
         return False
 
-    # 方法三：费吗平方和定理
+    # 方法三：费马平方和定理
 
 
 if __name__ == '__main__':
