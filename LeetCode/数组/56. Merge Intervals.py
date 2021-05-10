@@ -1,4 +1,5 @@
 '''
+56. 合并区间
 Given a collection of intervals, merge all overlapping intervals.
 
 Example 1:
@@ -25,7 +26,7 @@ class Solution:
         '''
         执行用时 :56 ms, 在所有 Python3 提交中击败了66.07%的用户
         内存消耗 :14.6 MB, 在所有 Python3 提交中击败了62.50%的用户
-        思路：先排序，只需要比较后面的第一位和前面的后一位就行。
+        思路：合并区间，一般都需要先排序，只需要比较后面的第一位和前面的后一位就行。
         1、如果新的数组，第一位比前一数组的后一位大，说明可以合并，并获取
         :param intervals:
         :return:
