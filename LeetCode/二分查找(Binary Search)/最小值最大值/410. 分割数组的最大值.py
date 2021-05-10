@@ -69,3 +69,8 @@ if __name__ == '__main__':
     nums = [7, 2, 5, 10, 8]
     m = 2
     print(Solution().splitArray(nums, m))
+
+    # 从0到n-1
+    n = 5
+    nums = list(range(n))
+    print(nums)
