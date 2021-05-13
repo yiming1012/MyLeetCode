@@ -41,6 +41,7 @@
 链接：https://leetcode-cn.com/problems/number-of-ways-to-stay-in-the-same-place-after-some-steps
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 """
+from functools import lru_cache
 
 
 class Solution:
@@ -95,9 +96,31 @@ class Solution:
 
         return dp[-1][0] % mod
 
+    def numWays3(self, steps: int, arrLen: int) -> int:
+        """
+        写法优雅、美观
+        @param steps:
+        @param arrLen:
+        @return:
+        """
+        @lru_cache(None)
+        def dfs(cur, s):
+            if cur == -1 or cur == arrLen or cur > s:
+                return 0
+            if cur == 0 and s == 0:
+                return 1
+
+            return dfs(cur, s - 1) + dfs(cur - 1, s - 1) + dfs(cur + 1, s - 1)
+
+        mod = 10 ** 9 + 7
+        ans = dfs(0, steps)
+        dfs.cache_clear()
+        return ans % mod
+
 
 if __name__ == '__main__':
     steps = 3
     arrLen = 2
     print(Solution().numWays1(steps, arrLen))
     print(Solution().numWays2(steps, arrLen))
+    print(Solution().numWays3(steps, arrLen))

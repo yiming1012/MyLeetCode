@@ -47,3 +47,15 @@ class Solution:
             else:
                 head = head.next
         return dummy.next
+
+    def deleteDuplicates3(self, head: ListNode) -> ListNode:
+        dummy = node = ListNode(float('inf'))
+        dummy.next = head
+        while head:
+            if head.val != node.val:
+                node.next = head
+                node = node.next
+            head = head.next
+        node.next = None
+
+        return dummy.next
