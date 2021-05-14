@@ -12,7 +12,7 @@
 
 1 是任何给定 primes 的超级丑数。
  给定 primes 中的数字以升序排列。
-0 < k ≤ 100, 0 < n ≤ 106, 0 < primes[i] < 1000 。
+0 < k ≤ 100, 0 < n ≤ 10^6, 0 < primes[i] < 1000 。
 第 n 个超级丑数确保在 32 位有符整数范围内。
 
 来源：力扣（LeetCode）
@@ -24,6 +24,13 @@ from typing import List
 
 class Solution:
     def nthSuperUglyNumber(self, n: int, primes: List[int]) -> int:
+        """
+        思路：和丑数II类似，不过由原来的2,3,5变成了一个数组，实现方式类似
+        1. 先找最小值，判断是哪个元素的第几个序列，对应索引+1即可
+        @param n:
+        @param primes:
+        @return:
+        """
         dp = [1] * n
         m = len(primes)
         index = [0] * m
