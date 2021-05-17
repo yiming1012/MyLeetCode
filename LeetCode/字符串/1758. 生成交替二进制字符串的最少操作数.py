@@ -34,6 +34,13 @@ s[i] 是 '0' 或 '1'
 
 class Solution:
     def minOperations(self, s: str) -> int:
+        """
+        思路：逻辑题
+        1. 分别枚举首项为0和1时，字符串需要修改的次数
+        2. 比较两次计算结果，取最小值
+        @param s:
+        @return:
+        """
         def count(c):
             cnt = 0
             for w in s:
