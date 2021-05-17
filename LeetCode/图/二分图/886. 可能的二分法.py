@@ -47,7 +47,7 @@ class Solution:
         """
         思路：dfs
         1. 染色法，记录遍历过的和未遍历过的对比
-        @param N: 
+        @param N:
         @param dislikes:
         @return:
         """
