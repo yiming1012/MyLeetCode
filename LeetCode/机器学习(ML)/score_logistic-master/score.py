@@ -44,7 +44,7 @@ train_data = pd.read_csv('data/cs-training.csv')
 print(train_data)
 train_data = train_data.iloc[:, 1:]
 # train_data.info()
-sys.exit(0)
+# sys.exit(0)
 
 # 缺失值处理，利用随机森林算法进行填充
 mData = train_data.iloc[:, [5, 0, 1, 2, 3, 4, 6, 7, 8, 9]]  # 将缺失列 MonthlyIncome放在最前面,为了后面预测值得取值方便，并且重新赋予一个新的dataframe
@@ -335,47 +335,47 @@ train_X = trans_woe(train_X, x2_name, x2_woe, x2_cut)
 train_X = trans_woe(train_X, x3_name, x3_woe, x3_cut)
 train_X = trans_woe(train_X, x7_name, x7_woe, x7_cut)
 train_X = trans_woe(train_X, x9_name, x9_woe, x9_cut)
-
+print(train_X)
 # 建立模型
 
 ## 对训练集结果计算AUC ROC KS值
 # # 方法1： 直接用lr预测数值  -- 预测结果0.85
 
-# test_X = trans_woe(test_X,x1_name,x1_woe,x1_cut)
-# test_X = trans_woe(test_X,x2_name,x2_woe,x2_cut)
-# test_X = trans_woe(test_X,x3_name,x3_woe,x3_cut)
-# test_X = trans_woe(test_X,x7_name,x7_woe,x7_cut)
-# test_X = trans_woe(test_X,x9_name,x9_woe,x9_cut)
+test_X = trans_woe(test_X,x1_name,x1_woe,x1_cut)
+test_X = trans_woe(test_X,x2_name,x2_woe,x2_cut)
+test_X = trans_woe(test_X,x3_name,x3_woe,x3_cut)
+test_X = trans_woe(test_X,x7_name,x7_woe,x7_cut)
+test_X = trans_woe(test_X,x9_name,x9_woe,x9_cut)
 
-# from sklearn.linear_model.logistic import LogisticRegression
+from sklearn.linear_model.logistic import LogisticRegression
 
-# lr = LogisticRegression()
-# lr.fit(train_X, train_y)
+lr = LogisticRegression()
+lr.fit(train_X, train_y)
 
-# # 注意predict 和predict_proba的区别
-# resu = lr.predict_proba(test_X)
-# resuLabel = lr.predict(test_X)
+# 注意predict 和predict_proba的区别
+resu = lr.predict_proba(test_X)
+resuLabel = lr.predict(test_X)
 
-# print('predict_proba:',resu)
-# print('-------')
-# print('predict:',resuLabel)
+print('predict_proba:',resu)
+print('-------')
+print('predict:',resuLabel)
 
-# from sklearn.metrics import roc_curve,auc
-# # X3=sm.add_constant(test_X)
-# # resu=result.predict(X3)
-# fpr,tpr,thershold=roc_curve(test_y,resu[:,1])
-# rocauc=auc(fpr,tpr)
-# plt.plot(fpr,tpr,'b',label='AUC=%0.2f'%rocauc)
-# plt.legend()
-# plt.plot([0,1],[0,1],'r--')
-# plt.xlim([0,1])
-# plt.ylim([0,1])
-# plt.ylabel('TPR')
-# plt.xlabel('FPR')
-# plt.title('逻辑回归预测')
-# plt.show()
+from sklearn.metrics import roc_curve,auc
+# X3=sm.add_constant(test_X)
+# resu=result.predict(X3)
+fpr,tpr,thershold=roc_curve(test_y,resu[:,1])
+rocauc=auc(fpr,tpr)
+plt.plot(fpr,tpr,'b',label='AUC=%0.2f'%rocauc)
+plt.legend()
+plt.plot([0,1],[0,1],'r--')
+plt.xlim([0,1])
+plt.ylim([0,1])
+plt.ylabel('TPR')
+plt.xlabel('FPR')
+plt.title('逻辑回归预测')
+plt.show()
 
-# print ('KS:',max(tpr-fpr))
+print ('KS:',max(tpr-fpr))
 
 
 # 验证集测试
@@ -458,4 +458,5 @@ def compute_score(x):  # x为数组，包含x1,x2,x3,x7和x9的取值
 
 # 输入一个根据筛选后的特征类似的值，并得到最后的评分结果
 x_score = [0.3, 44, 3, 3, 5]
-compute_score(x_score)
+res=compute_score(x_score)
+print(res)

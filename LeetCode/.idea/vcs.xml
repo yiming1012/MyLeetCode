@@ -2,5 +2,8 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/机器学习(ML)/GBDT" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/机器学习(ML)/GBDT_Simple_Tutorial" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/机器学习(ML)/GBDT_Simple_Tutorial/GBDT" vcs="Git" />
   </component>
 </project>
