@@ -58,6 +58,7 @@ def standRegres(xArr, yArr):
     # mat()函数将xArr，yArr转换为矩阵 mat().T 代表的是对矩阵进行转置操作
     xMat = mat(xArr)
     yMat = mat(yArr).T
+    print(xMat,yMat)
     # 矩阵乘法的条件是左矩阵的列数等于右矩阵的行数
     xTx = xMat.T * xMat
     # 因为要用到xTx的逆矩阵，所以事先需要确定计算得到的xTx是否可逆，条件是矩阵的行列式不为0
@@ -482,7 +483,7 @@ def crossValidation(xArr,yArr,numVal=10):
 
 # test for standRegression
 def regression1():
-    xArr, yArr = loadDataSet("data/8.Regression/data.txt")
+    xArr, yArr = loadDataSet("../../../../data/8.Regression/data.txt")
     xMat = mat(xArr)
     yMat = mat(yArr)
     ws = standRegres(xArr, yArr)
@@ -576,7 +577,7 @@ def regression5():
 
 
 if __name__ == '__main__':
-    # regression1()
+    regression1()
     # regression2()
     # abaloneTest()
     # regression3()
