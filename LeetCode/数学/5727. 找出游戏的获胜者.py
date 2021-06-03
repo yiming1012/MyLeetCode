@@ -43,9 +43,11 @@
 链接：https://leetcode-cn.com/problems/find-the-winner-of-the-circular-game
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 """
+
+
 class Solution:
     def findTheWinner(self, n: int, k: int) -> int:
-        ans=0
-        for i in range(2,n+1):
-            ans=(ans+k)%i
-        return ans+1
+        ans = 0
+        for i in range(2, n + 1):
+            ans = (ans + k) % i
+        return ans + 1

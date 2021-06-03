@@ -40,6 +40,14 @@
 
 class Solution:
     def nthUglyNumber(self, n: int, a: int, b: int, c: int) -> int:
+        """
+        好难
+        @param n:
+        @param a:
+        @param b:
+        @param c:
+        @return:
+        """
         def gcd(a, b):
             return gcd(b, a % b) if b else a
 

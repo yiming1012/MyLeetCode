@@ -24,6 +24,7 @@ class Solution:
     def nthUglyNumber1(self, n: int) -> int:
         """
         思路：动态规划法+三指针
+        1. 每次找到最小值，看看是哪个质数的第几个索引
         @param n:
         @return:
         """

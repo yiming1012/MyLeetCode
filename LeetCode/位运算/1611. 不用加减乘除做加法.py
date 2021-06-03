@@ -36,7 +36,7 @@ class Solution:
         print(maxInt)
         while b:
             a, b = (a ^ b) & maxInt, ((a & b) << 1) & maxInt
-            # print(a,b)
+            print(a,b)
         return a if a < 2 ** 31 else ~(a ^ maxInt)
 
 

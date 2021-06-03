@@ -42,7 +42,7 @@ class Solution:
                 for j in range(n):
                     A[i][j] ^= 1
 
-        # 如果某列中1的个数少于m//2,交换
+        # 如果某列少于m//2,交换
         for i in range(1, n):
             ones = 0
             for j in range(m):
