@@ -51,3 +51,15 @@ if __name__ == '__main__':
     a = [1, 3, 15, 11, 2]
     b = [23, 127, 235, 19, 8]
     print(Solution().smallestDifference(a, b))
+
+    import bisect
+
+    a = [1, 4, 6, 8, 12]
+    position1 = bisect.bisect(a, 13)
+    position2 = bisect.bisect_left(a, 13)
+    position3 = bisect.bisect_right(a, 13)
+    print(position1)
+    print(position2)
+    print(position3)
+    print(inf)
+
