@@ -113,6 +113,7 @@ def mono_bin(Y, X, n=10):
     iv = ((d3['goodattribute'] - d3['badattribute']) * d3['woe']).sum()
     d4 = (d3.sort_index(by='min')).reset_index(drop=True)
     woe = list(d4['woe'].round(3))
+    print("woe:", woe)
     cut = []
     cut.append(float('-inf'))
     for i in range(1, n + 1):
@@ -279,6 +280,7 @@ d10 = pd.concat([d10_x1, d10_x2, d10_x3, d10_x4, d10_x5, d10_x6])
 
 x10_d, x10_iv, x10_woe = woe_value(d10)
 x10_cut = [float('-inf'), 0, 1, 2, 3, 5, float('+inf')]
+print("x10_d:", x10_d, x10_iv, x10_woe)
 
 # 特征筛选：多变量分析---用于剔除特征高度相关的某些特征
 corr = train_data.corr()
@@ -321,6 +323,7 @@ def trans_woe(var, var_name, x_woe, x_cut):
             var.loc[((var[var_name] > x_cut[i]) & (var[var_name] <= x_cut[i + 1])), woe_name] = x_woe[i]
         else:
             var.loc[(var[var_name] > x_cut[len(x_woe) - 1]), woe_name] = x_woe[len(x_woe) - 1]
+    print("var:", var)
     return var
 
 
@@ -341,11 +344,11 @@ print(train_X)
 ## 对训练集结果计算AUC ROC KS值
 # # 方法1： 直接用lr预测数值  -- 预测结果0.85
 
-test_X = trans_woe(test_X,x1_name,x1_woe,x1_cut)
-test_X = trans_woe(test_X,x2_name,x2_woe,x2_cut)
-test_X = trans_woe(test_X,x3_name,x3_woe,x3_cut)
-test_X = trans_woe(test_X,x7_name,x7_woe,x7_cut)
-test_X = trans_woe(test_X,x9_name,x9_woe,x9_cut)
+test_X = trans_woe(test_X, x1_name, x1_woe, x1_cut)
+test_X = trans_woe(test_X, x2_name, x2_woe, x2_cut)
+test_X = trans_woe(test_X, x3_name, x3_woe, x3_cut)
+test_X = trans_woe(test_X, x7_name, x7_woe, x7_cut)
+test_X = trans_woe(test_X, x9_name, x9_woe, x9_cut)
 
 from sklearn.linear_model.logistic import LogisticRegression
 
@@ -356,27 +359,27 @@ lr.fit(train_X, train_y)
 resu = lr.predict_proba(test_X)
 resuLabel = lr.predict(test_X)
 
-print('predict_proba:',resu)
+print('predict_proba:', resu)
 print('-------')
-print('predict:',resuLabel)
+print('predict:', resuLabel)
 
-from sklearn.metrics import roc_curve,auc
+from sklearn.metrics import roc_curve, auc
+
 # X3=sm.add_constant(test_X)
 # resu=result.predict(X3)
-fpr,tpr,thershold=roc_curve(test_y,resu[:,1])
-rocauc=auc(fpr,tpr)
-plt.plot(fpr,tpr,'b',label='AUC=%0.2f'%rocauc)
+fpr, tpr, thershold = roc_curve(test_y, resu[:, 1])
+rocauc = auc(fpr, tpr)
+plt.plot(fpr, tpr, 'b', label='AUC=%0.2f' % rocauc)
 plt.legend()
-plt.plot([0,1],[0,1],'r--')
-plt.xlim([0,1])
-plt.ylim([0,1])
+plt.plot([0, 1], [0, 1], 'r--')
+plt.xlim([0, 1])
+plt.ylim([0, 1])
 plt.ylabel('TPR')
 plt.xlabel('FPR')
 plt.title('逻辑回归预测')
 plt.show()
 
-print ('KS:',max(tpr-fpr))
-
+print('KS:', max(tpr - fpr))
 
 # 验证集测试
 
@@ -458,5 +461,5 @@ def compute_score(x):  # x为数组，包含x1,x2,x3,x7和x9的取值
 
 # 输入一个根据筛选后的特征类似的值，并得到最后的评分结果
 x_score = [0.3, 44, 3, 3, 5]
-res=compute_score(x_score)
+res = compute_score(x_score)
 print(res)

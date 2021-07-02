@@ -5,6 +5,8 @@
 # Definition for a binary tree node.
 from cmath import inf
 
+import collections
+
 
 class TreeNode:
     def __init__(self, x):
@@ -16,31 +18,38 @@ class TreeNode:
 class Mock:
     def arrToTreeNode(self, inputValues):
         root = TreeNode(int(inputValues[0]))
-        nodeQueue = [root]
-        front = 0
+        queue = collections.deque([root])
         index = 1
         while index < len(inputValues):
-            node = nodeQueue[front]
-            front = front + 1
-
+            node = queue.popleft()
             item = inputValues[index]
-            index = index + 1
             if item:
                 node.left = TreeNode(item)
-                nodeQueue.append(node.left)
+                queue.append(node.left)
 
+            index = index + 1
             if index >= len(inputValues):
                 break
 
             item = inputValues[index]
-            index = index + 1
             if item:
                 node.right = TreeNode(item)
-                nodeQueue.append(node.right)
+                queue.append(node.right)
+            index = index + 1
         return root
 
 
 if __name__ == '__main__':
     arr = [5, 1, 4, None, None, 3, 6]
     root = Mock().arrToTreeNode(arr)
-    print(root.val)
+
+
+    def dfs(root):
+        if not root:
+            return
+        print(root.val)
+        dfs(root.left)
+        dfs(root.right)
+
+
+    dfs(root)
