@@ -41,7 +41,7 @@ from typing import List
 class Solution:
     def maxAlternatingSum(self, nums: List[int]) -> int:
         # dp[i][0]:以i结尾的为偶数下标
-
+        # dp[i][1]:以i结尾的为奇数下标
         n=len(nums)
         dp=[[float('-inf')]*2 for _ in range(n)]
         dp[0][0]=nums[0]
@@ -50,6 +50,7 @@ class Solution:
             dp[i][0]=max(dp[i-1][0],dp[i-1][1]+num)
             dp[i][1]=max(dp[i-1][1],dp[i-1][0]-num)
         return max(dp[-1])
+
 
 if __name__ == '__main__':
     nums = [4, 2, 5, 3]
