@@ -34,19 +34,19 @@ from typing import List
 class Solution:
     def scheduleCourse(self, courses: List[List[int]]) -> int:
         # 先按照截止时间从小到大排序
-        courses.sort(key=lambda x:x[1])
-        heap=[]
-        time=0
-        for dr,dl in courses:
-            time+=dr
-            heapq.heappush(heap,-dr)
+        courses.sort(key=lambda x: x[1])
+        heap = []
+        time = 0
+        for dr, dl in courses:
+            time += dr
+            heapq.heappush(heap, -dr)
             # 如果课程持续时间超过当前的截止时间，将耗时较长的课程弹出堆
-            while time>dl:
-                t=heapq.heappop(heap)
-                time+=t
+            while time > dl:
+                t = heapq.heappop(heap)
+                time += t
         return len(heap)
 
-    
+
 if __name__ == '__main__':
-    courses=[[100, 200], [200, 1300], [1000, 1250], [2000, 3200]]
+    courses = [[100, 200], [200, 1300], [1000, 1250], [2000, 3200]]
     print(Solution().scheduleCourse(courses))
