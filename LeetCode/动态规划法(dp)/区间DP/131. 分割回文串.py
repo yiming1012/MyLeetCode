@@ -37,6 +37,8 @@ class Solution:
             for j in range(i + 1, n):
                 f[i][j] = (s[i] == s[j]) and f[i + 1][j - 1]
 
+        print(f)
+
         ret = list()
         ans = list()
 
